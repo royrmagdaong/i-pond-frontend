@@ -14,8 +14,15 @@
               class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <p class="text-h3 text-center" style="color: #484848">
+              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
                 {{ phLevel }}
+              </p>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
               <div style="height: 220px">
                 <Bar :data="data" :options="pHoptions" />
@@ -29,8 +36,15 @@
               class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <p class="text-h3 text-center" style="color: #484848">
+              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
                 {{ salinity }} ppt
+              </p>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
               <div style="height: 220px">
                 <Bar :data="data2" :options="salinityOptions" />
@@ -44,8 +58,15 @@
               class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <p class="text-h3 text-center" style="color: #484848">
+              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
                 {{ temperature }} °C
+              </p>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
               <div style="height: 220px">
                 <Bar :data="data3" :options="tempOptions" />
@@ -59,8 +80,15 @@
               class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <p class="text-h3 text-center" style="color: #484848">
+              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
                 {{ dissolvedOxygen }} mg/L
+              </p>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
               <div style="height: 220px">
                 <Bar :data="data4" :options="doxOptions" />
@@ -112,6 +140,7 @@ const phLevel = ref(0);
 const salinity = ref(0);
 const temperature = ref(0);
 const dissolvedOxygen = ref(0);
+const last_reading_date = ref("");
 const phChartData = ref([]);
 const phChartDataLabel = ref([]);
 const salChartData = ref([]);
@@ -293,6 +322,7 @@ const get_10_sensor_data = async () => {
     salinity.value = res?.data.data[0]?.attributes.salinity;
     temperature.value = res?.data.data[0]?.attributes.temperature;
     dissolvedOxygen.value = res?.data.data[0]?.attributes.dissolved_oxygen;
+    last_reading_date.value = res?.data.data[0]?.attributes.createdAt;
   });
   await fetchSensorData()
     .then((res) => {

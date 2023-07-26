@@ -1,104 +1,150 @@
 <template>
-  <q-page class="flex flex-center">
-    <q-card bordered flat class="q-pa-sm">
-      <p
-        class="text-h3 q-pt-sm q-pl-sm text-weight-bold text-center"
-        style="color: #484848"
-      >
-        Pond 1
-      </p>
-      <div class="row q-col-gutter-sm q-pa-sm">
-        <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%">
-            <q-card-section
-              class="q-pa-lg text-overline"
-              style="letter-spacing: 1px; font-size: 14px"
-            >
-              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
-                {{ phLevel }}
-              </p>
-              <p
-                style="color: #7a7a7a; margin: 0"
-                class="text-caption text-center"
-              >
-                as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
-              </p>
-              <div style="height: 220px">
-                <Bar :data="data" :options="pHoptions" />
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%">
-            <q-card-section
-              class="q-pa-lg text-overline"
-              style="letter-spacing: 1px; font-size: 14px"
-            >
-              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
-                {{ salinity }} ppt
-              </p>
-              <p
-                style="color: #7a7a7a; margin: 0"
-                class="text-caption text-center"
-              >
-                as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
-              </p>
-              <div style="height: 220px">
-                <Bar :data="data2" :options="salinityOptions" />
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%">
-            <q-card-section
-              class="q-pa-lg text-overline"
-              style="letter-spacing: 1px; font-size: 14px"
-            >
-              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
-                {{ temperature }} °C
-              </p>
-              <p
-                style="color: #7a7a7a; margin: 0"
-                class="text-caption text-center"
-              >
-                as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
-              </p>
-              <div style="height: 220px">
-                <Bar :data="data3" :options="tempOptions" />
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%">
-            <q-card-section
-              class="q-pa-lg text-overline"
-              style="letter-spacing: 1px; font-size: 14px"
-            >
-              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
-                {{ dissolvedOxygen }} mg/L
-              </p>
-              <p
-                style="color: #7a7a7a; margin: 0"
-                class="text-caption text-center"
-              >
-                as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
-              </p>
-              <div style="height: 220px">
-                <Bar :data="data4" :options="doxOptions" />
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-      </div>
-    </q-card>
-  </q-page>
+  <q-layout class="login-layout" view="lHh Lpr lFf">
+    <q-header elevated style="background-color: #eee !important">
+      <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleLeftDrawer"
+          style="color: #242424"
+        />
+
+        <q-toolbar-title style="color: #242424"> iPond </q-toolbar-title>
+        <q-btn color="grey-6" round flat icon="more_horiz">
+          <q-menu transition-show="jump-down" transition-hide="jump-up">
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup>
+                <q-item-section @click="logout">Logout</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+      <q-list class="q-mt-lg">
+        <EssentialLink
+          v-for="link in linksList"
+          :key="link.title"
+          v-bind="link"
+        />
+      </q-list>
+    </q-drawer>
+    <q-page-container>
+      <q-page class="flex flex-center">
+        <q-card bordered flat class="q-pa-sm">
+          <p
+            class="text-h3 q-pt-sm q-pl-sm text-weight-bold text-center"
+            style="color: #484848"
+          >
+            Pond 1
+          </p>
+          <div class="row q-col-gutter-sm q-pa-sm">
+            <div class="col-12 col-sm-6">
+              <q-card bordered flat style="height: 100%">
+                <q-card-section
+                  class="q-pa-lg text-overline"
+                  style="letter-spacing: 1px; font-size: 14px"
+                >
+                  <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+                    {{ phLevel }}
+                  </p>
+                  <p
+                    style="color: #7a7a7a; margin: 0"
+                    class="text-caption text-center"
+                  >
+                    as of
+                    {{
+                      moment(last_reading_date).format("MMMM DD, YYYY hh:mmA")
+                    }}
+                  </p>
+                  <div style="height: 220px">
+                    <Bar :data="data" :options="pHoptions" />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-12 col-sm-6">
+              <q-card bordered flat style="height: 100%">
+                <q-card-section
+                  class="q-pa-lg text-overline"
+                  style="letter-spacing: 1px; font-size: 14px"
+                >
+                  <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+                    {{ salinity }} ppt
+                  </p>
+                  <p
+                    style="color: #7a7a7a; margin: 0"
+                    class="text-caption text-center"
+                  >
+                    as of
+                    {{
+                      moment(last_reading_date).format("MMMM DD, YYYY hh:mmA")
+                    }}
+                  </p>
+                  <div style="height: 220px">
+                    <Bar :data="data2" :options="salinityOptions" />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-12 col-sm-6">
+              <q-card bordered flat style="height: 100%">
+                <q-card-section
+                  class="q-pa-lg text-overline"
+                  style="letter-spacing: 1px; font-size: 14px"
+                >
+                  <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+                    {{ temperature }} °C
+                  </p>
+                  <p
+                    style="color: #7a7a7a; margin: 0"
+                    class="text-caption text-center"
+                  >
+                    as of
+                    {{
+                      moment(last_reading_date).format("MMMM DD, YYYY hh:mmA")
+                    }}
+                  </p>
+                  <div style="height: 220px">
+                    <Bar :data="data3" :options="tempOptions" />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-12 col-sm-6">
+              <q-card bordered flat style="height: 100%">
+                <q-card-section
+                  class="q-pa-lg text-overline"
+                  style="letter-spacing: 1px; font-size: 14px"
+                >
+                  <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+                    {{ dissolvedOxygen }} mg/L
+                  </p>
+                  <p
+                    style="color: #7a7a7a; margin: 0"
+                    class="text-caption text-center"
+                  >
+                    as of
+                    {{
+                      moment(last_reading_date).format("MMMM DD, YYYY hh:mmA")
+                    }}
+                  </p>
+                  <div style="height: 220px">
+                    <Bar :data="data4" :options="doxOptions" />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+          </div>
+        </q-card>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script setup>
@@ -120,6 +166,9 @@ import {
 } from "chart.js";
 import { Bar, Doughnut, Line } from "vue-chartjs";
 import moment from "moment";
+import { useRouter } from "vue-router";
+import { LocalStorage } from "quasar";
+import keys from "../constants/localStorageKeys";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -133,9 +182,19 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import EssentialLink from "components/EssentialLink.vue";
 
-const socket_IO = socket("https://pchs-backend.ap.ngrok.io", {});
-// const socket_IO = socket(server_url, {});
+const linksList = [
+  {
+    title: "Dashboard",
+    caption: "quasar.dev",
+    icon: "dashboard",
+  },
+];
+const leftDrawerOpen = ref(false);
+
+// const socket_IO = socket("https://pchs-backend.ap.ngrok.io", {});
+const socket_IO = socket(server_url, {});
 const phLevel = ref(0);
 const salinity = ref(0);
 const temperature = ref(0);
@@ -156,6 +215,21 @@ let data_1 = [];
 //   label1.push(Math.floor(Math.random() * 100));
 //   data_1.push(Math.floor(Math.random() * 100));
 // }
+
+const router = useRouter();
+const loading = ref(false);
+
+const logout = () => {
+  loading.value = true;
+  setTimeout(() => {
+    LocalStorage.remove(keys.USER);
+    router.push({ path: "/login" });
+  }, 400);
+};
+
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+};
 
 const data = ref({
   // labels: label1,
@@ -263,6 +337,14 @@ const doxOptions = {
       },
     },
   },
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        text: "Custom Chart Title",
+      },
+    },
+  },
 };
 
 const lineOptions = {
@@ -271,6 +353,7 @@ const lineOptions = {
 };
 
 const updateCharts = () => {
+  console.log("options", tempOptions);
   data.value = {
     labels: phChartDataLabel.value,
     datasets: [
@@ -299,6 +382,9 @@ const updateCharts = () => {
       {
         label: "Temperature",
         backgroundColor: "#484848",
+        font: {
+          size: 32,
+        },
         data: rtdChartData.value,
       },
     ],
@@ -318,10 +404,10 @@ const updateCharts = () => {
 
 const get_10_sensor_data = async () => {
   await fetchCurrentSensorData().then((res) => {
-    phLevel.value = res?.data.data[0]?.attributes.pH;
-    salinity.value = res?.data.data[0]?.attributes.salinity;
-    temperature.value = res?.data.data[0]?.attributes.temperature;
-    dissolvedOxygen.value = res?.data.data[0]?.attributes.dissolved_oxygen;
+    phLevel.value = res?.data.data[0]?.attributes.ph;
+    salinity.value = res?.data.data[0]?.attributes.sal;
+    temperature.value = res?.data.data[0]?.attributes.rtd;
+    dissolvedOxygen.value = res?.data.data[0]?.attributes.dox;
     last_reading_date.value = res?.data.data[0]?.attributes.createdAt;
   });
   await fetchSensorData()
@@ -329,22 +415,22 @@ const get_10_sensor_data = async () => {
       console.log(res?.data);
 
       for (let i = 0; i <= res.data.data.length; i++) {
-        phChartData.value[i] = res?.data.data[i]?.attributes.pH;
+        phChartData.value[i] = res?.data.data[i]?.attributes.ph;
         phChartDataLabel.value[i] = moment(
           res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
 
-        salChartData.value[i] = res?.data.data[i]?.attributes.salinity;
+        salChartData.value[i] = res?.data.data[i]?.attributes.sal;
         salChartDataLabel.value[i] = moment(
           res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
 
-        rtdChartData.value[i] = res?.data.data[i]?.attributes.temperature;
+        rtdChartData.value[i] = res?.data.data[i]?.attributes.rtd;
         rtdChartDataLabel.value[i] = moment(
           res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
 
-        doxChartData.value[i] = res?.data.data[i]?.attributes.dissolved_oxygen;
+        doxChartData.value[i] = res?.data.data[i]?.attributes.dox;
         doxChartDataLabel.value[i] = moment(
           res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");

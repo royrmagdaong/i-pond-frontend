@@ -1,7 +1,7 @@
 import axios from "axios";
 import server_url from "src/constants/server-url";
-// const baseURL = `${server_url}/api/`;
-const baseURL = `https://pchs-backend.ap.ngrok.io/api/`;
+const baseURL = `${server_url}/api/`;
+// const baseURL = `https://pchs-backend.ap.ngrok.io/api/`;
 
 const fetchSensorData = async () => {
   return await axios.get(

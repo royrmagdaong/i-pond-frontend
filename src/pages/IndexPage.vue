@@ -1,20 +1,24 @@
 <template>
   <q-page class="flex flex-center">
     <q-card bordered flat class="q-pa-sm">
-      <p class="text-h5 q-pt-sm q-pl-sm text-weight-bold">Pond 1</p>
+      <p
+        class="text-h3 q-pt-sm q-pl-sm text-weight-bold text-center"
+        style="color: #484848"
+      >
+        Pond 1
+      </p>
       <div class="row q-col-gutter-sm q-pa-sm">
         <div class="col-12 col-sm-6">
           <q-card bordered flat style="height: 100%">
             <q-card-section
-              class="q-pa-sm text-overline row flex"
+              class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <div class="col-3">
-                <p class="q-pl-sm">Ph Level</p>
-                <p class="text-h3">{{ phLevel }}</p>
-              </div>
-              <div class="col-9" style="height: 200px">
-                <Bar :data="data" :options="options" />
+              <p class="text-h3 text-center" style="color: #484848">
+                {{ phLevel }}
+              </p>
+              <div style="height: 220px">
+                <Bar :data="data" :options="pHoptions" />
               </div>
             </q-card-section>
           </q-card>
@@ -22,15 +26,14 @@
         <div class="col-12 col-sm-6">
           <q-card bordered flat style="height: 100%">
             <q-card-section
-              class="q-pa-sm text-overline row flex"
+              class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <div class="col-3">
-                <p class="q-pl-sm">Salinity</p>
-                <p class="text-h3">{{ salinity }}</p>
-              </div>
-              <div class="col-9" style="height: 200px">
-                <Bar :data="data2" :options="options" />
+              <p class="text-h3 text-center" style="color: #484848">
+                {{ salinity }} ppt
+              </p>
+              <div style="height: 220px">
+                <Bar :data="data2" :options="salinityOptions" />
               </div>
             </q-card-section>
           </q-card>
@@ -38,15 +41,14 @@
         <div class="col-12 col-sm-6">
           <q-card bordered flat style="height: 100%">
             <q-card-section
-              class="q-pa-sm text-overline row flex"
+              class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <div class="col-3">
-                <p class="q-pl-sm">Temperature</p>
-                <p class="text-h3">{{ temperature }}</p>
-              </div>
-              <div class="col-9" style="height: 200px">
-                <Bar :data="data3" :options="options" />
+              <p class="text-h3 text-center" style="color: #484848">
+                {{ temperature }} °C
+              </p>
+              <div style="height: 220px">
+                <Bar :data="data3" :options="tempOptions" />
               </div>
             </q-card-section>
           </q-card>
@@ -54,15 +56,14 @@
         <div class="col-12 col-sm-6">
           <q-card bordered flat style="height: 100%">
             <q-card-section
-              class="q-pa-sm text-overline row flex"
+              class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <div class="col-3">
-                <p class="q-pl-sm">Dissolved Oxygen</p>
-                <p class="text-h3">{{ dissolvedOxygen }}</p>
-              </div>
-              <div class="col-9" style="height: 200px">
-                <Bar :data="data4" :options="options" />
+              <p class="text-h3 text-center" style="color: #484848">
+                {{ dissolvedOxygen }} mg/L
+              </p>
+              <div style="height: 220px">
+                <Bar :data="data4" :options="doxOptions" />
               </div>
             </q-card-section>
           </q-card>
@@ -76,7 +77,7 @@
 import { onMounted, ref } from "vue";
 import socket from "socket.io-client";
 import server_url from "src/constants/server-url";
-import { fetchSensorData } from "src/api/sensor_data";
+import { fetchSensorData, fetchCurrentSensorData } from "src/api/sensor_data";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -105,7 +106,8 @@ ChartJS.register(
   Legend
 );
 
-const socket_IO = socket(server_url, {});
+const socket_IO = socket("https://pchs-backend.ap.ngrok.io", {});
+// const socket_IO = socket(server_url, {});
 const phLevel = ref(0);
 const salinity = ref(0);
 const temperature = ref(0);
@@ -119,22 +121,29 @@ const rtdChartDataLabel = ref([]);
 const doxChartData = ref([]);
 const doxChartDataLabel = ref([]);
 
+let label1 = [];
+let data_1 = [];
+// for (let i = 0; i <= 149; i++) {
+//   label1.push(Math.floor(Math.random() * 100));
+//   data_1.push(Math.floor(Math.random() * 100));
+// }
+
 const data = ref({
-  labels: ["1", "2", "3", "4", "5", "6", "7", "6", "7", "6", "7"],
+  // labels: label1,
   datasets: [
     {
       label: "pH",
-      backgroundColor: "#55a3d4",
-      data: [40, 38, 32, 39, 52, 45, 39],
+      backgroundColor: "#d84527",
+      data: data_1,
     },
   ],
 });
 
 const data2 = ref({
-  labels: ["1", "2", "3", "4", "5", "6", "7", "6", "7", "6", "7"],
+  // labels: ["1", "2", "3", "4", "5", "6", "7", "6", "7", "6", "7"],
   datasets: [
     {
-      label: "pH",
+      label: "salinity",
       backgroundColor: "#55a3d4",
       data: [40, 38, 32, 39, 52, 45, 39],
     },
@@ -142,10 +151,10 @@ const data2 = ref({
 });
 
 const data3 = ref({
-  labels: ["1", "2", "3", "4", "5", "6", "7", "6", "7", "6", "7"],
+  // labels: ["1", "2", "3", "4", "5", "6", "7", "6", "7", "6", "7"],
   datasets: [
     {
-      label: "pH",
+      label: "temperature",
       backgroundColor: "#55a3d4",
       data: [40, 38, 32, 39, 52, 45, 39],
     },
@@ -153,19 +162,78 @@ const data3 = ref({
 });
 
 const data4 = ref({
-  labels: ["1", "2", "3", "4", "5", "6", "7", "6", "7", "6", "7"],
+  // labels: ["1", "2", "3", "4", "5", "6", "7", "6", "7", "6", "7"],
   datasets: [
     {
-      label: "pH",
+      label: "dissolved oxygen",
       backgroundColor: "#55a3d4",
       data: [40, 38, 32, 39, 52, 45, 39],
     },
   ],
 });
 
-const options = {
+const pHoptions = {
   responsive: true,
   maintainAspectRatio: false,
+  scales: {
+    y: {
+      min: 0,
+      max: 12,
+    },
+    x: {
+      ticks: {
+        display: false, // Hide x-axis label text
+      },
+    },
+  },
+};
+
+const salinityOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      // min: 0,
+      // max: 5,
+    },
+    x: {
+      ticks: {
+        display: false, // Hide x-axis label text
+      },
+    },
+  },
+};
+
+const tempOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      min: 10,
+      max: 50,
+    },
+    x: {
+      ticks: {
+        display: false, // Hide x-axis label text
+      },
+    },
+  },
+};
+
+const doxOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      min: 0,
+      max: 15,
+    },
+    x: {
+      ticks: {
+        display: false, // Hide x-axis label text
+      },
+    },
+  },
 };
 
 const lineOptions = {
@@ -179,7 +247,7 @@ const updateCharts = () => {
     datasets: [
       {
         label: "pH",
-        backgroundColor: "#55a3d4",
+        backgroundColor: "#d84527",
         data: phChartData.value,
       },
     ],
@@ -189,8 +257,8 @@ const updateCharts = () => {
     labels: salChartDataLabel.value,
     datasets: [
       {
-        label: "pH",
-        backgroundColor: "#55a3d4",
+        label: "Salinity",
+        backgroundColor: "#54ab66",
         data: salChartData.value,
       },
     ],
@@ -200,8 +268,8 @@ const updateCharts = () => {
     labels: rtdChartDataLabel.value,
     datasets: [
       {
-        label: "pH",
-        backgroundColor: "#55a3d4",
+        label: "Temperature",
+        backgroundColor: "#484848",
         data: rtdChartData.value,
       },
     ],
@@ -211,8 +279,8 @@ const updateCharts = () => {
     labels: doxChartDataLabel.value,
     datasets: [
       {
-        label: "pH",
-        backgroundColor: "#55a3d4",
+        label: "Dissolved Oxygen",
+        backgroundColor: "#ece513",
         data: doxChartData.value,
       },
     ],
@@ -220,32 +288,35 @@ const updateCharts = () => {
 };
 
 const get_10_sensor_data = async () => {
+  await fetchCurrentSensorData().then((res) => {
+    phLevel.value = res?.data.data[0]?.attributes.pH;
+    salinity.value = res?.data.data[0]?.attributes.salinity;
+    temperature.value = res?.data.data[0]?.attributes.temperature;
+    dissolvedOxygen.value = res?.data.data[0]?.attributes.dissolved_oxygen;
+  });
   await fetchSensorData()
     .then((res) => {
-      phLevel.value = res?.data.data[0].attributes.ph;
-      salinity.value = res?.data.data[0].attributes.sal;
-      temperature.value = res?.data.data[0].attributes.rtd;
-      dissolvedOxygen.value = res?.data.data[0].attributes.dox;
+      console.log(res?.data);
 
-      for (let i = 0; i <= 9; i++) {
-        phChartData.value[i] = res?.data.data[i].attributes.ph;
+      for (let i = 0; i <= res.data.data.length; i++) {
+        phChartData.value[i] = res?.data.data[i]?.attributes.pH;
         phChartDataLabel.value[i] = moment(
-          res?.data.data[i].attributes.createdAt
+          res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
 
-        salChartData.value[i] = res?.data.data[i].attributes.sal;
+        salChartData.value[i] = res?.data.data[i]?.attributes.salinity;
         salChartDataLabel.value[i] = moment(
-          res?.data.data[i].attributes.createdAt
+          res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
 
-        rtdChartData.value[i] = res?.data.data[i].attributes.rtd;
+        rtdChartData.value[i] = res?.data.data[i]?.attributes.temperature;
         rtdChartDataLabel.value[i] = moment(
-          res?.data.data[i].attributes.createdAt
+          res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
 
-        doxChartData.value[i] = res?.data.data[i].attributes.dox;
+        doxChartData.value[i] = res?.data.data[i]?.attributes.dissolved_oxygen;
         doxChartDataLabel.value[i] = moment(
-          res?.data.data[i].attributes.createdAt
+          res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
       }
 

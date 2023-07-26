@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated style="background-color: #eee !important">
       <q-toolbar>
         <q-btn
           flat
@@ -9,9 +9,10 @@
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
+          style="color: #242424"
         />
 
-        <q-toolbar-title> iPond </q-toolbar-title>
+        <q-toolbar-title style="color: #242424"> iPond </q-toolbar-title>
       </q-toolbar>
     </q-header>
 

@@ -26,11 +26,11 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list class="q-mt-lg">
+      <q-list class="q-mt-xl">
         <EssentialLink
           v-for="link in linksList"
           :key="link.title"
-          v-bind="link"
+          :link="link"
         />
       </q-list>
     </q-drawer>
@@ -187,8 +187,13 @@ import EssentialLink from "components/EssentialLink.vue";
 const linksList = [
   {
     title: "Dashboard",
-    caption: "quasar.dev",
     icon: "dashboard",
+    link: "dashboard",
+  },
+  {
+    title: "Logout",
+    icon: "logout",
+    link: "logout",
   },
 ];
 const leftDrawerOpen = ref(false);
@@ -353,7 +358,6 @@ const lineOptions = {
 };
 
 const updateCharts = () => {
-  console.log("options", tempOptions);
   data.value = {
     labels: phChartDataLabel.value,
     datasets: [

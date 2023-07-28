@@ -28,8 +28,24 @@ const active = ref(false);
 
 const routeTo = (path) => {
   switch (path) {
-    case "dashboard":
-      router.push({ path: "/dashboard" });
+    case "pond-1":
+      router.push({ path: "/pond-1" });
+      setActive();
+      break;
+    case "pond-2":
+      router.push({ path: "/pond-2" });
+      setActive();
+      break;
+    case "pond-3":
+      router.push({ path: "/pond-3" });
+      setActive();
+      break;
+    case "pond-4":
+      router.push({ path: "/pond-4" });
+      setActive();
+      break;
+    case "pond-5":
+      router.push({ path: "/pond-5" });
       setActive();
       break;
     case "logout":

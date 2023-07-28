@@ -108,7 +108,7 @@ const signIn = async () => {
   if (success) {
     loading.value = true;
     setTimeout(() => {
-      router.push("/dashboard");
+      router.push("/pond-1");
     }, 800);
   } else {
     console.log("Error", error.message);

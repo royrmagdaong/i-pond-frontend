@@ -10,7 +10,9 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const back = () => {
-  router.push({ path: "/dashboard" });
+  const basePath = router.currentRoute.value.matched[1].path;
+  console.log(basePath);
+  router.push({ path: basePath });
 };
 </script>
 <style scoped>

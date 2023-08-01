@@ -14,7 +14,11 @@ const login = async (data) => {
   if (data) {
     const { email, password } = data;
     const params = { identifier: email, password: password };
-    await useAxios(params, axiosTypes.POST, endpoints.LOGIN) // login api
+    await useAxios(
+      params,
+      axiosTypes.POST,
+      "https://i-pond-backend.ap.ngrok.io/api/auth/local"
+    ) // login api
       .then(async (res) => {
         user = res.data.user;
         jwt = res.data.jwt;

@@ -13,7 +13,7 @@ const routeGuards = (Router) => {
     if (to.meta.notLoggedIn && isLoggedIn) {
       console.log("you are already logged in");
       return {
-        path: "/dashboard",
+        path: "/pond-1",
       };
     } else if (to.meta.requiresAuth && !isLoggedIn) {
       console.log("not logged in");

@@ -2,7 +2,10 @@
   <q-item
     clickable
     @click="routeTo(link.link)"
-    :class="{ active: active, inactive: !active }"
+    :class="{
+      active: getActiveLink(link.link),
+      inactive: !getActiveLink(link.link),
+    }"
     class="link-item"
   >
     <q-item-section v-if="link.icon" avatar>
@@ -20,6 +23,7 @@ import { useRouter } from "vue-router";
 import { LocalStorage } from "quasar";
 import { ref, onMounted } from "vue";
 import keys from "../constants/localStorageKeys";
+import { navDrawerLinks } from "src/composables/globalRefs";
 
 const props = defineProps(["link"]);
 const router = useRouter();
@@ -55,6 +59,10 @@ const routeTo = (path) => {
     default:
       console.log("default");
   }
+};
+
+const getActiveLink = (val) => {
+  // if()
 };
 
 const logout = () => {

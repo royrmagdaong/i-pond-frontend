@@ -96,8 +96,8 @@ ChartJS.register(
   Legend
 );
 
-// const socket_IO = socket("https://pchs-backend.ap.ngrok.io", {});
-const socket_IO = socket(server_url, {});
+const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
+// const socket_IO = socket(server_url, {});
 const phLevel = ref(0);
 const phChartData = ref([]);
 const phChartDataLabel = ref([]);

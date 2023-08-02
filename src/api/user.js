@@ -14,6 +14,7 @@ const login = async (data) => {
   if (data) {
     const { email, password } = data;
     const params = { identifier: email, password: password };
+
     await useAxios(
       params,
       axiosTypes.POST,

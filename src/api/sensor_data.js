@@ -1,6 +1,7 @@
 import axios from "axios";
 import server_url from "src/constants/server-url";
 import { LocalStorage } from "quasar";
+import { displayDateOnly2 } from "src/composables/useDateFormatter";
 // const baseURL = `${server_url}/api/`;
 // const baseURL = `https://i-pond-backend.ap.ngrok.io/api/`;
 // const baseURL = `https://i-pond-backend.ap.ngrok.io/api/`;
@@ -26,10 +27,18 @@ const fetchCurrentSensorData = async () => {
   });
 };
 
+var date = new Date();
+var date2 = new Date();
+date.setDate(date.getDate());
+date2.setDate(date2.getDate() + 1);
+
+console.log("Yesterday", displayDateOnly2(date));
+console.log("Today + 1", displayDateOnly2(date2));
+
 const getPHLevels = async (
-  dateFrom = "2023-08-01",
-  dateTo = "2023-08-03",
-  limit = 10,
+  dateFrom = displayDateOnly2(date),
+  dateTo = displayDateOnly2(date2),
+  limit = 20,
   offset = 0
 ) => {
   return await axios.get(

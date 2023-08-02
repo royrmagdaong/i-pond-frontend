@@ -9,7 +9,7 @@
             style="letter-spacing: 1px; font-size: 14px"
           >
             <p class="text-h3 text-center q-mb-sm" style="color: #484848">
-              {{ phLevel }}
+              {{ phLevel }} ppt
             </p>
             <p
               style="color: #7a7a7a; margin: 0"
@@ -33,9 +33,9 @@
           bordered
           :pagination="initialPagination"
         >
-          <template v-slot:body-cell-ph="props">
+          <template v-slot:body-cell-sal="props">
             <q-td :props="props" class="">
-              {{ props.row?.attributes.ph }}
+              {{ props.row?.attributes.sal }} ppt
             </q-td>
           </template>
           <template v-slot:body-cell-time="props">
@@ -96,8 +96,8 @@ ChartJS.register(
   Legend
 );
 
-// const socket_IO = socket("https://pchs-backend.ap.ngrok.io", {});
-const socket_IO = socket(server_url, {});
+const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
+// const socket_IO = socket(server_url, {});
 const phLevel = ref(0);
 const phChartData = ref([]);
 const phChartDataLabel = ref([]);
@@ -105,10 +105,10 @@ const last_reading_date = ref("");
 const rows = ref([]);
 const columns = [
   {
-    name: "ph",
+    name: "sal",
     align: "left",
-    label: "PH Level",
-    field: "ph",
+    label: "Salinity",
+    field: "sal",
   },
   {
     name: "time",
@@ -138,8 +138,8 @@ const data = ref({
   // labels: label1,
   datasets: [
     {
-      label: "pH",
-      backgroundColor: "#d84527",
+      label: "Salinity",
+      backgroundColor: "#54ab66",
       data: data_1,
     },
   ],
@@ -149,10 +149,10 @@ const pHoptions = {
   responsive: true,
   maintainAspectRatio: false,
   scales: {
-    y: {
-      min: 0,
-      max: 12,
-    },
+    // y: {
+    //   min: 0,
+    //   max: 12,
+    // },
     x: {
       ticks: {
         display: false, // Hide x-axis label text
@@ -166,8 +166,8 @@ const updateCharts = () => {
     labels: phChartDataLabel.value,
     datasets: [
       {
-        label: "pH",
-        backgroundColor: "#d84527",
+        label: "Salinity",
+        backgroundColor: "#54ab66",
         data: phChartData.value,
       },
     ],
@@ -184,7 +184,7 @@ const initSocketIO = async () => {
 const getSensorData = async () => {
   await fetchCurrentSensorData().then((res) => {
     console.log(res);
-    phLevel.value = res?.data.data[0]?.attributes.ph;
+    phLevel.value = res?.data.data[0]?.attributes.sal;
     // salinity.value = res?.data.data[0]?.attributes.sal;
     // temperature.value = res?.data.data[0]?.attributes.rtd;
     // dissolvedOxygen.value = res?.data.data[0]?.attributes.dox;
@@ -196,7 +196,7 @@ const getSensorData = async () => {
       console.log(res?.data);
 
       for (let i = 0; i <= res.data.data.length; i++) {
-        phChartData.value[i] = res?.data.data[i]?.attributes.ph;
+        phChartData.value[i] = res?.data.data[i]?.attributes.sal;
         phChartDataLabel.value[i] = moment(
           res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");

@@ -8,7 +8,7 @@ const useDateFormatter = (data) => {
 
 const displayTimeOnly = (data) => {
   const date = moment(data);
-  const formattedDate = date.format("hh:mm A");
+  const formattedDate = date.format("hh:mm:ss A");
   return formattedDate;
 };
 

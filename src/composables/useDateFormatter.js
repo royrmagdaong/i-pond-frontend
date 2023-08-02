@@ -18,4 +18,10 @@ const displayDateOnly = (data) => {
   return formattedDate;
 };
 
-export { useDateFormatter, displayTimeOnly, displayDateOnly };
+const displayDateOnly2 = (data) => {
+  const date = moment(data);
+  const formattedDate = date.format("YYYY-MM-DD");
+  return formattedDate;
+};
+
+export { useDateFormatter, displayTimeOnly, displayDateOnly, displayDateOnly2 };

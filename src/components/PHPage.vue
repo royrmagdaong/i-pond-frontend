@@ -227,6 +227,7 @@ const getPH_Levels = async () => {
 onMounted(() => {
   getSensorData();
   getPH_Levels();
+  initSocketIO();
 });
 </script>
 <style scoped></style>

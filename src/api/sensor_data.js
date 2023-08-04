@@ -32,17 +32,18 @@ var date2 = new Date();
 date.setDate(date.getDate());
 date2.setDate(date2.getDate() + 1);
 
-console.log("Yesterday", displayDateOnly2(date));
-console.log("Today + 1", displayDateOnly2(date2));
+// console.log("Yesterday", displayDateOnly2(date));
+// console.log("Today + 1", displayDateOnly2(date2));
 
 const getPHLevels = async (
   dateFrom = displayDateOnly2(date),
   dateTo = displayDateOnly2(date2),
   limit = 20,
-  offset = 0
+  offset = 0,
+  order
 ) => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:desc`,
+    `${baseURL}sensor-readings?filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

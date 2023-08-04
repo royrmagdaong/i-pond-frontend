@@ -142,29 +142,29 @@ const routes = [
           requiresAuth: true,
           isAdmin: true,
         },
-        component: () => import("pages/IndexPage.vue"),
-        children: [
-          {
-            path: "",
-            component: () => import("src/components/DashboardPage.vue"),
-          },
-          {
-            path: "ph",
-            component: () => import("src/components/PHPage.vue"),
-          },
-          {
-            path: "sal",
-            component: () => import("src/components/SalPage.vue"),
-          },
-          {
-            path: "temp",
-            component: () => import("src/components/TempPage.vue"),
-          },
-          {
-            path: "dox",
-            component: () => import("src/components/DOXPage.vue"),
-          },
-        ],
+        component: () => import("components/TestPage.vue"),
+        // children: [
+        //   {
+        //     path: "",
+        //     component: () => import("src/components/DashboardPage.vue"),
+        //   },
+        //   {
+        //     path: "ph",
+        //     component: () => import("src/components/PHPage.vue"),
+        //   },
+        //   {
+        //     path: "sal",
+        //     component: () => import("src/components/SalPage.vue"),
+        //   },
+        //   {
+        //     path: "temp",
+        //     component: () => import("src/components/TempPage.vue"),
+        //   },
+        //   {
+        //     path: "dox",
+        //     component: () => import("src/components/DOXPage.vue"),
+        //   },
+        // ],
       },
     ],
   },

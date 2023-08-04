@@ -81,6 +81,11 @@ module.exports = configure(function (/* ctx */) {
     devServer: {
       // https: true
       open: true, // opens browser window automatically
+      hmr: {
+        // comment this hrm object when in localhost
+        overlay: false,
+        clientPort: 443,
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

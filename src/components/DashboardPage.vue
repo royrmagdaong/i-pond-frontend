@@ -231,8 +231,8 @@ const salinityOptions = {
   maintainAspectRatio: false,
   scales: {
     y: {
-      // min: 0,
-      // max: 5,
+      min: 0,
+      max: 50,
     },
     x: {
       ticks: {

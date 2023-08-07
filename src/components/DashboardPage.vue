@@ -48,7 +48,7 @@
                 as of
                 {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
-              <div style="height: 220px">
+              <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data2" :options="salinityOptions" />
               </div>
             </q-card-section>
@@ -71,7 +71,7 @@
                 as of
                 {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
-              <div style="height: 220px">
+              <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data3" :options="tempOptions" />
               </div>
             </q-card-section>
@@ -94,7 +94,7 @@
                 as of
                 {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
-              <div style="height: 220px">
+              <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data4" :options="doxOptions" />
               </div>
             </q-card-section>
@@ -182,7 +182,7 @@ const data2 = ref({
   datasets: [
     {
       label: "salinity",
-      backgroundColor: "#55a3d4",
+      backgroundColor: "#54ab66",
       data: [40, 38, 32, 39, 52, 45, 39],
     },
   ],
@@ -193,7 +193,7 @@ const data3 = ref({
   datasets: [
     {
       label: "temperature",
-      backgroundColor: "#55a3d4",
+      backgroundColor: "#484848",
       data: [40, 38, 32, 39, 52, 45, 39],
     },
   ],
@@ -204,7 +204,7 @@ const data4 = ref({
   datasets: [
     {
       label: "dissolved oxygen",
-      backgroundColor: "#55a3d4",
+      backgroundColor: "#ece513",
       data: [40, 38, 32, 39, 52, 45, 39],
     },
   ],

@@ -3,14 +3,6 @@
     <BackButton class="q-mt-lg q-ml-md" />
     <div class="row q-col-gutter-sm q-pa-sm">
       <div class="col-12">
-        <q-card
-          bordered
-          flat
-          style="height: 50px; width: 100%"
-          class=""
-        ></q-card>
-      </div>
-      <div class="col-12">
         <q-card bordered flat style="height: 100%; width: 100%" class="">
           <q-card-section
             class="q-pa-lg text-overline"
@@ -268,8 +260,8 @@ const initialPagination = ref({
   // sortBy: "asc",
   // descending: false,
   page: 1,
-  rowsPerPage: 10,
-  rowsNumber: 10,
+  rowsPerPage: 20,
+  rowsNumber: 20,
 });
 
 let data_1 = [];
@@ -329,23 +321,6 @@ const getSensorData = async () => {
     // dissolvedOxygen.value = res?.data.data[0]?.attributes.dox;
     last_reading_date.value = res?.data.data[0]?.attributes.createdAt;
   });
-  await fetchSensorData()
-    .then((res) => {
-      for (let i = 0; i <= res.data.data.length; i++) {
-        phChartData.value[i] = res?.data.data[i]?.attributes.ph;
-        phChartDataLabel.value[i] = moment(
-          res?.data.data[i]?.attributes.createdAt
-        ).format("h:mm:ss a");
-      }
-
-      phChartData.value.reverse();
-      phChartDataLabel.value.reverse();
-
-      updateCharts();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 };
 
 const getPH_Levels = async (dateFrom, dateTo, order) => {
@@ -369,8 +344,19 @@ const getPH_Levels = async (dateFrom, dateTo, order) => {
       totalRows.value = res?.data.meta.pagination.total;
 
       const rowsData = res?.data.data;
-      console.log("Rows Meta", res?.data.meta.pagination);
+      // console.log("Rows Meta", res?.data);
       rows.value.splice(0, rows.value.length, ...rowsData);
+
+      // update charts
+      for (let i = 0; i <= res?.data.data.length; i++) {
+        phChartData.value[i] = res?.data.data[i]?.attributes.ph;
+        phChartDataLabel.value[i] = moment(
+          res?.data.data[i]?.attributes.createdAt
+        ).format("h:mm:ss a");
+      }
+      phChartData.value.reverse();
+      phChartDataLabel.value.reverse();
+      updateCharts();
     })
     .catch((err) => {
       console.log(err);

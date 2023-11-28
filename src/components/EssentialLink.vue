@@ -52,6 +52,10 @@ const routeTo = (path) => {
       router.push({ path: "/pond-5" });
       setActive();
       break;
+    case "report":
+      router.push({ path: "/report" });
+      setActive();
+      break;
     case "logout":
       setActive();
       logout();

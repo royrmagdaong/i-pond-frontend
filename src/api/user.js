@@ -18,6 +18,7 @@ const login = async (data) => {
     await useAxios(
       params,
       axiosTypes.POST,
+      // "http://localhost:1338/api/auth/local"
       "https://i-pond-backend.ap.ngrok.io/api/auth/local"
     ) // login api
       .then(async (res) => {

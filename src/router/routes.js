@@ -102,6 +102,20 @@ const routes = [
           },
         ],
       },
+      {
+        path: "/report",
+        meta: {
+          requiresAuth: true,
+          isAdmin: true,
+        },
+        component: () => import("pages/IndexPage.vue"),
+        children: [
+          {
+            path: "",
+            component: () => import("src/components/GenerateReport.vue"),
+          },
+        ],
+      },
     ],
   },
 

@@ -218,6 +218,7 @@ ChartJS.register(
   Legend
 );
 
+// const socket_IO = socket("http://localhost:1338", {});
 const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
 // const socket_IO = socket(server_url, {});
 const phLevel = ref(0);

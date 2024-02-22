@@ -271,8 +271,8 @@ const data = ref({
   // labels: label1,
   datasets: [
     {
-      label: "pH",
-      backgroundColor: "#d84527",
+      label: "Humidity",
+      backgroundColor: "#71c1ef",
       data: data_1,
     },
   ],
@@ -300,7 +300,7 @@ const updateCharts = () => {
     datasets: [
       {
         label: "Humidity",
-        backgroundColor: "#d84527",
+        backgroundColor: "#71c1ef",
         data: phChartData.value,
       },
     ],

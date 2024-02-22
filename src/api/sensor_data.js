@@ -97,12 +97,48 @@ const getPHLevels = async (
   );
 };
 
+const getPHLevels_pnd2 = async (
+  dateFrom = displayDateOnly2(date),
+  dateTo = displayDateOnly2(date2),
+  limit = 20,
+  offset = 0,
+  order
+) => {
+  return await axios.get(
+    `${baseURL}sensor-readings?filters[pnd][$eq]=2&filters[ph][$gt]=${0}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const getPHLevels_pnd3 = async (
+  dateFrom = displayDateOnly2(date),
+  dateTo = displayDateOnly2(date2),
+  limit = 20,
+  offset = 0,
+  order
+) => {
+  return await axios.get(
+    `${baseURL}sensor-readings?filters[pnd][$eq]=3&filters[ph][$gt]=${0}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export {
   fetchSensorData,
   fetchCurrentSensorData,
   getPHLevels,
   fetchSensorData_pnd2,
   fetchCurrentSensorData_pnd2,
+  getPHLevels_pnd2,
   fetchSensorData_pnd3,
   fetchCurrentSensorData_pnd3,
+  getPHLevels_pnd3,
 };

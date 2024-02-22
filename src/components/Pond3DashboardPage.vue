@@ -10,7 +10,7 @@
       <div class="row q-col-gutter-sm q-pa-sm">
         <div class="col-12 col-sm-6">
           <q-card bordered flat style="height: 100%" class="">
-            <div class="ph-hover-border" @click="select('ph')"></div>
+            <div class="ph-hover-border" @click="select('humidity')"></div>
             <q-card-section
               class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
@@ -296,8 +296,8 @@ const initSocketIO = async () => {
 const select = (val) => {
   const basePath = router.currentRoute.value.path;
   switch (val) {
-    case "ph":
-      router.push({ path: `${basePath}/ph` });
+    case "humidity":
+      router.push({ path: `${basePath}/humidity` });
       break;
     case "temp":
       router.push({ path: `${basePath}/temp` });

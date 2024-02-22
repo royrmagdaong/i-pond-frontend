@@ -28,6 +28,50 @@ const fetchCurrentSensorData = async () => {
   );
 };
 
+const fetchSensorData_pnd2 = async () => {
+  return await axios.get(
+    `${baseURL}sensor-readings?filters[pnd][$eq]=${2}&filters[ph][$gt]=${0}&sort[0]=createdAt%3Adesc`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const fetchCurrentSensorData_pnd2 = async () => {
+  return await axios.get(
+    `${baseURL}sensor-readings?filters[pnd][$eq]=${2}&filters[ph][$gt]=${0}&sort[0]=createdAt%3Adesc`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const fetchSensorData_pnd3 = async () => {
+  return await axios.get(
+    `${baseURL}sensor-readings?filters[pnd][$eq]=${3}&filters[ph][$gt]=${0}&sort[0]=createdAt%3Adesc`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const fetchCurrentSensorData_pnd3 = async () => {
+  return await axios.get(
+    `${baseURL}sensor-readings?filters[pnd][$eq]=${3}&filters[ph][$gt]=${0}&sort[0]=createdAt%3Adesc`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 var date = new Date();
 var date2 = new Date();
 date.setDate(date.getDate());
@@ -53,4 +97,12 @@ const getPHLevels = async (
   );
 };
 
-export { fetchSensorData, fetchCurrentSensorData, getPHLevels };
+export {
+  fetchSensorData,
+  fetchCurrentSensorData,
+  getPHLevels,
+  fetchSensorData_pnd2,
+  fetchCurrentSensorData_pnd2,
+  fetchSensorData_pnd3,
+  fetchCurrentSensorData_pnd3,
+};

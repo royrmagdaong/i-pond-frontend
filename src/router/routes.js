@@ -56,7 +56,7 @@ const routes = [
         children: [
           {
             path: "",
-            component: () => import("src/components/NotAvailable.vue"),
+            component: () => import("src/components/Pond2DashboardPage.vue"),
           },
         ],
       },
@@ -70,7 +70,7 @@ const routes = [
         children: [
           {
             path: "",
-            component: () => import("src/components/NotAvailable.vue"),
+            component: () => import("src/components/Pond3DashboardPage.vue"),
           },
         ],
       },

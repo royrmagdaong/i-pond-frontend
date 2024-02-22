@@ -66,7 +66,7 @@ const routeTo = (path) => {
 };
 
 const getActiveLink = (val) => {
-  // if()
+  // console.log("active link", val);
 };
 
 const logout = () => {
@@ -83,6 +83,7 @@ const setActive = () => {
 };
 
 const initActiveLink = () => {
+  console.log("active link");
   if (router.currentRoute.value.path.includes(`/${props.link.link}`)) {
     active.value = true;
   }

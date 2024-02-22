@@ -126,8 +126,8 @@ const data = ref({
   // labels: label1,
   datasets: [
     {
-      label: "pH",
-      backgroundColor: "#d84527",
+      label: "Humidity",
+      backgroundColor: "#71c1ef",
       data: data_1,
     },
   ],
@@ -209,7 +209,7 @@ const updateCharts = () => {
     datasets: [
       {
         label: "Humidity",
-        backgroundColor: "#d84527",
+        backgroundColor: "#71c1ef",
         data: phChartData.value,
       },
     ],
@@ -322,7 +322,7 @@ onMounted(async () => {
   z-index: 10;
 }
 .ph-hover-border:hover {
-  border: 8px solid #d84527;
+  border: 8px solid #71c1ef;
   cursor: pointer;
 }
 .sal-hover-border:hover {

@@ -56,7 +56,15 @@ const routes = [
         children: [
           {
             path: "",
-            component: () => import("src/components/NotAvailable.vue"),
+            component: () => import("src/components/Pond2DashboardPage.vue"),
+          },
+          {
+            path: "humidity",
+            component: () => import("src/components/Pond2Humidity.vue"),
+          },
+          {
+            path: "temp",
+            component: () => import("src/components/Pond2Temp.vue"),
           },
         ],
       },
@@ -70,7 +78,15 @@ const routes = [
         children: [
           {
             path: "",
-            component: () => import("src/components/NotAvailable.vue"),
+            component: () => import("src/components/Pond3DashboardPage.vue"),
+          },
+          {
+            path: "humidity",
+            component: () => import("src/components/Pond3Humidity.vue"),
+          },
+          {
+            path: "temp",
+            component: () => import("src/components/Pond3Temp.vue"),
           },
         ],
       },

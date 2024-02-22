@@ -8,7 +8,7 @@ const token = LocalStorage.getItem("ipond-user")?.jwt;
 
 const fetchSensorData = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?&sort[0]=createdAt%3Adesc`,
+    `${baseURL}sensor-readings?filters[pnd][$eq]=${1}&filters[ph][$gt]=${0}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -18,11 +18,14 @@ const fetchSensorData = async () => {
 };
 
 const fetchCurrentSensorData = async () => {
-  return await axios.get(`${baseURL}sensor-readings?sort[0]=createdAt%3Adesc`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return await axios.get(
+    `${baseURL}sensor-readings?filters[pnd][$eq]=${1}&filters[ph][$gt]=${0}&sort[0]=createdAt%3Adesc`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };
 
 var date = new Date();
@@ -41,7 +44,7 @@ const getPHLevels = async (
   order
 ) => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
+    `${baseURL}sensor-readings?filters[pnd][$eq]=1&filters[ph][$gt]=${0}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

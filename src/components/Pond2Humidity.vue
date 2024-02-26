@@ -284,7 +284,7 @@ const pHoptions = {
   scales: {
     y: {
       min: 0,
-      max: 12,
+      max: 100,
     },
     x: {
       ticks: {

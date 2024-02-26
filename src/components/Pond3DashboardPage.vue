@@ -23,7 +23,9 @@
                 class="text-caption text-center"
               >
                 as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+                {{
+                  moment(last_reading_date).format("MMMM DD, YYYY hh:mm:ss A")
+                }}
               </p>
               <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data" :options="pHoptions" />
@@ -46,7 +48,9 @@
                 class="text-caption text-center"
               >
                 as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+                {{
+                  moment(last_reading_date).format("MMMM DD, YYYY hh:mm:ss A")
+                }}
               </p>
               <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data3" :options="tempOptions" />
@@ -172,7 +176,7 @@ const pHoptions = {
   scales: {
     y: {
       min: 0,
-      max: 12,
+      max: 100,
     },
     x: {
       ticks: {
@@ -257,6 +261,7 @@ const get_10_sensor_data = async () => {
     console.log("pnd 3 ", res?.data.data);
     phLevel.value = res?.data.data[0]?.attributes.ph;
     temperature.value = res?.data.data[0]?.attributes.rtd;
+    last_reading_date.value = res?.data.data[0]?.attributes.createdAt;
   });
   await fetchSensorData_pnd3()
     .then((res) => {

@@ -2,8 +2,8 @@ import axios from "axios";
 import server_url from "src/constants/server-url";
 import { LocalStorage } from "quasar";
 import { displayDateOnly2 } from "src/composables/useDateFormatter";
-// const baseURL = `http://localhost:1338/api/`;
-const baseURL = `https://i-pond-backend.ap.ngrok.io/api/`;
+const baseURL = `http://localhost:1338/api/`;
+// const baseURL = `https://i-pond-backend.ap.ngrok.io/api/`;
 const token = LocalStorage.getItem("ipond-user")?.jwt;
 
 const fetchSensorData = async () => {

@@ -23,4 +23,6 @@ const navDrawerLinks = ref([
   },
 ]);
 
-export { navDrawerLinks };
+const fullpageLoaderState = ref(false);
+
+export { navDrawerLinks, fullpageLoaderState };

@@ -74,10 +74,15 @@ const linksList = [
     link: "pond-5",
   },
   {
-    title: "Report",
-    icon: "summarize",
-    link: "report",
+    title: "Demo Pond",
+    icon: "water_drop",
+    link: "demo-pond",
   },
+  // {
+  //   title: "Report",
+  //   icon: "summarize",
+  //   link: "report",
+  // },
   {
     title: "Logout",
     icon: "logout",

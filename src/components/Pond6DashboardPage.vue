@@ -110,7 +110,10 @@
 import { onMounted, ref } from "vue";
 import socket from "socket.io-client";
 import server_url from "src/constants/server-url";
-import { fetchSensorData, fetchCurrentSensorData } from "src/api/sensor_data";
+import {
+  fetchSensorData_pnd6,
+  fetchCurrentSensorData_pnd6,
+} from "src/api/sensor_data";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -341,14 +344,14 @@ const updateCharts = () => {
 };
 
 const get_10_sensor_data = async () => {
-  await fetchCurrentSensorData().then((res) => {
+  await fetchCurrentSensorData_pnd6().then((res) => {
     phLevel.value = res?.data.data[0]?.attributes.ph;
     salinity.value = res?.data.data[0]?.attributes.sal;
     temperature.value = res?.data.data[0]?.attributes.rtd;
     dissolvedOxygen.value = res?.data.data[0]?.attributes.dox;
     last_reading_date.value = res?.data.data[0]?.attributes.createdAt;
   });
-  await fetchSensorData()
+  await fetchSensorData_pnd6()
     .then((res) => {
       console.log(res?.data);
 

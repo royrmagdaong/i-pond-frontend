@@ -119,6 +119,36 @@ const routes = [
         ],
       },
       {
+        path: "/demo-pond",
+        meta: {
+          requiresAuth: true,
+          isAdmin: true,
+        },
+        component: () => import("pages/IndexPage.vue"),
+        children: [
+          {
+            path: "",
+            component: () => import("src/components/Pond6DashboardPage.vue"),
+          },
+          {
+            path: "ph",
+            component: () => import("src/components/Pond6PHPage.vue"),
+          },
+          {
+            path: "sal",
+            component: () => import("src/components/Pond6Sal.vue"),
+          },
+          {
+            path: "temp",
+            component: () => import("src/components/Pond6Temp.vue"),
+          },
+          {
+            path: "dox",
+            component: () => import("src/components/Pond6DOXPage.vue"),
+          },
+        ],
+      },
+      {
         path: "/report",
         meta: {
           requiresAuth: true,

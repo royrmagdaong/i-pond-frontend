@@ -10,7 +10,7 @@
       <div class="row q-col-gutter-sm q-pa-sm">
         <div class="col-12 col-sm-6">
           <q-card bordered flat style="height: 100%" class="">
-            <div class="ph-hover-border" @click="select('humidity')"></div>
+            <div class="ph-hover-border" @click="select('ph')"></div>
             <q-card-section
               class="q-pa-lg text-overline"
               style="letter-spacing: 1px; font-size: 14px"
@@ -23,12 +23,33 @@
                 class="text-caption text-center"
               >
                 as of
-                {{
-                  moment(last_reading_date).format("MMMM DD, YYYY hh:mm:ss A")
-                }}
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
               <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data" :options="pHoptions" />
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="col-12 col-sm-6">
+          <q-card bordered flat style="height: 100%">
+            <div class="sal-hover-border" @click="select('sal')"></div>
+            <q-card-section
+              class="q-pa-lg text-overline"
+              style="letter-spacing: 1px; font-size: 14px"
+            >
+              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+                {{ salinity }} ppt
+              </p>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
+              <div style="height: 220px; position: relative; z-index: 11">
+                <Bar :data="data2" :options="salinityOptions" />
               </div>
             </q-card-section>
           </q-card>
@@ -48,9 +69,7 @@
                 class="text-caption text-center"
               >
                 as of
-                {{
-                  moment(last_reading_date).format("MMMM DD, YYYY hh:mm:ss A")
-                }}
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
               </p>
               <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data3" :options="tempOptions" />
@@ -58,8 +77,32 @@
             </q-card-section>
           </q-card>
         </div>
+        <div class="col-12 col-sm-6">
+          <q-card bordered flat style="height: 100%">
+            <div class="dox-hover-border" @click="select('dox')"></div>
+            <q-card-section
+              class="q-pa-lg text-overline"
+              style="letter-spacing: 1px; font-size: 14px"
+            >
+              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+                {{ dissolvedOxygen }} mg/L
+              </p>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
+              <div style="height: 220px; position: relative; z-index: 11">
+                <Bar :data="data4" :options="doxOptions" />
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
     </q-card>
+    <div></div>
   </q-page>
 </template>
 
@@ -68,8 +111,8 @@ import { onMounted, ref } from "vue";
 import socket from "socket.io-client";
 import server_url from "src/constants/server-url";
 import {
-  fetchSensorData_pnd3,
-  fetchCurrentSensorData_pnd3,
+  fetchSensorData_pnd6,
+  fetchCurrentSensorData_pnd6,
 } from "src/api/sensor_data";
 import {
   Chart as ChartJS,
@@ -88,6 +131,7 @@ import moment from "moment";
 import { useRouter } from "vue-router";
 import { LocalStorage } from "quasar";
 import keys from "../constants/localStorageKeys";
+import { LinearGauge } from "canvas-gauges";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -106,7 +150,9 @@ ChartJS.register(
 const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
 // const socket_IO = socket(server_url, {});
 const phLevel = ref(0);
+const salinity = ref(0);
 const temperature = ref(0);
+const dissolvedOxygen = ref(0);
 const last_reading_date = ref("");
 const phChartData = ref([]);
 const phChartDataLabel = ref([]);
@@ -117,6 +163,7 @@ const rtdChartDataLabel = ref([]);
 const doxChartData = ref([]);
 const doxChartDataLabel = ref([]);
 
+const ph_gauge = ref(7);
 let label1 = [];
 let data_1 = [];
 // for (let i = 0; i <= 149; i++) {
@@ -130,8 +177,8 @@ const data = ref({
   // labels: label1,
   datasets: [
     {
-      label: "Humidity",
-      backgroundColor: "#71c1ef",
+      label: "pH",
+      backgroundColor: "#d84527",
       data: data_1,
     },
   ],
@@ -176,7 +223,23 @@ const pHoptions = {
   scales: {
     y: {
       min: 0,
-      max: 100,
+      max: 12,
+    },
+    x: {
+      ticks: {
+        display: false, // Hide x-axis label text
+      },
+    },
+  },
+};
+
+const salinityOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      min: 0,
+      max: 50,
     },
     x: {
       ticks: {
@@ -202,6 +265,30 @@ const tempOptions = {
   },
 };
 
+const doxOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      min: 0,
+      max: 15,
+    },
+    x: {
+      ticks: {
+        display: false, // Hide x-axis label text
+      },
+    },
+  },
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        text: "Custom Chart Title",
+      },
+    },
+  },
+};
+
 const lineOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -212,8 +299,8 @@ const updateCharts = () => {
     labels: phChartDataLabel.value,
     datasets: [
       {
-        label: "Humidity",
-        backgroundColor: "#71c1ef",
+        label: "pH",
+        backgroundColor: "#d84527",
         data: phChartData.value,
       },
     ],
@@ -257,13 +344,14 @@ const updateCharts = () => {
 };
 
 const get_10_sensor_data = async () => {
-  await fetchCurrentSensorData_pnd3().then((res) => {
-    console.log("pnd 3 ", res?.data.data);
+  await fetchCurrentSensorData_pnd6().then((res) => {
     phLevel.value = res?.data.data[0]?.attributes.ph;
+    salinity.value = res?.data.data[0]?.attributes.sal;
     temperature.value = res?.data.data[0]?.attributes.rtd;
+    dissolvedOxygen.value = res?.data.data[0]?.attributes.dox;
     last_reading_date.value = res?.data.data[0]?.attributes.createdAt;
   });
-  await fetchSensorData_pnd3()
+  await fetchSensorData_pnd6()
     .then((res) => {
       console.log(res?.data);
 
@@ -273,16 +361,30 @@ const get_10_sensor_data = async () => {
           res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
 
+        salChartData.value[i] = res?.data.data[i]?.attributes.sal;
+        salChartDataLabel.value[i] = moment(
+          res?.data.data[i]?.attributes.createdAt
+        ).format("h:mm:ss a");
+
         rtdChartData.value[i] = res?.data.data[i]?.attributes.rtd;
         rtdChartDataLabel.value[i] = moment(
+          res?.data.data[i]?.attributes.createdAt
+        ).format("h:mm:ss a");
+
+        doxChartData.value[i] = res?.data.data[i]?.attributes.dox;
+        doxChartDataLabel.value[i] = moment(
           res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
       }
 
       phChartData.value.reverse();
       phChartDataLabel.value.reverse();
+      salChartData.value.reverse();
+      salChartDataLabel.value.reverse();
       rtdChartData.value.reverse();
       rtdChartDataLabel.value.reverse();
+      doxChartData.value.reverse();
+      doxChartDataLabel.value.reverse();
 
       updateCharts();
     })
@@ -301,8 +403,14 @@ const initSocketIO = async () => {
 const select = (val) => {
   const basePath = router.currentRoute.value.path;
   switch (val) {
-    case "humidity":
-      router.push({ path: `${basePath}/humidity` });
+    case "ph":
+      router.push({ path: `${basePath}/ph` });
+      break;
+    case "sal":
+      router.push({ path: `${basePath}/sal` });
+      break;
+    case "dox":
+      router.push({ path: `${basePath}/dox` });
       break;
     case "temp":
       router.push({ path: `${basePath}/temp` });
@@ -311,6 +419,22 @@ const select = (val) => {
       break;
   }
 };
+
+var gauge = new LinearGauge({
+  renderTo: document.createElement("canvas"),
+  width: 160,
+  height: 600,
+  borderRadius: 20,
+  borders: 0,
+  barStrokeWidth: 20,
+  minorTicks: 10,
+  majorTicks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+  value: 22.3,
+  units: "°C",
+  colorValueBoxShadow: false,
+});
+
+document.body.appendChild(gauge.options.renderTo);
 
 onMounted(async () => {
   await initSocketIO();
@@ -327,7 +451,7 @@ onMounted(async () => {
   z-index: 10;
 }
 .ph-hover-border:hover {
-  border: 8px solid #71c1ef;
+  border: 8px solid #d84527;
   cursor: pointer;
 }
 .sal-hover-border:hover {

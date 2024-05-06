@@ -9,7 +9,7 @@
             style="letter-spacing: 1px; font-size: 14px"
           >
             <p class="text-h3 text-center q-mb-sm" style="color: #484848">
-              {{ phLevel }}
+              {{ phLevel }} mg/L
             </p>
             <p
               style="color: #7a7a7a; margin: 0"
@@ -25,6 +25,94 @@
         </q-card>
       </div>
       <div class="col-12">
+        <!-- <q-card
+          bordered
+          flat
+          style="width: 100%"
+          class="flex justify-end q-pa-sm"
+        >
+          <div class="q-mr-sm sort-opt">
+            <q-select
+              dense
+              outlined
+              v-model="sort"
+              :options="sort_options"
+              @update:model-value="changeQueryParams"
+            />
+          </div>
+          <div class="q-mr-sm date-from">
+            <q-input
+              dense
+              outlined
+              v-model="date_from"
+              label="Date from"
+              mask="date"
+              :rules="['date']"
+              hide-bottom-space
+            >
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date
+                      v-model="date_from"
+                      @update:model-value="changeQueryParams"
+                    >
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+
+          <div class="date-to">
+            <q-input
+              dense
+              outlined
+              v-model="date_to"
+              label="Date to"
+              mask="date"
+              :rules="['date']"
+              hide-bottom-space
+            >
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date
+                      v-model="date_to"
+                      @update:model-value="changeQueryParams"
+                    >
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+        </q-card> -->
+
         <q-card
           bordered
           flat
@@ -134,9 +222,9 @@
           :loading="loading"
         >
           <!--  -->
-          <template v-slot:body-cell-ph="props">
+          <template v-slot:body-cell-dox="props">
             <q-td :props="props" class="">
-              {{ props.row?.attributes.ph }}
+              {{ props.row?.attributes.dox }} mg/L
             </q-td>
           </template>
           <template v-slot:body-cell-time="props">
@@ -186,7 +274,8 @@
         <q-card>
           <q-card-section class="row items-center">
             <span class=""
-              >You are about to download ph level data from date to date.</span
+              >You are about to download dissolved oxygen data from
+              {{ date_from }} to {{ date_to }}.</span
             >
           </q-card-section>
 
@@ -211,8 +300,8 @@ import { ref, onMounted } from "vue";
 import BackButton from "src/components/BackButton.vue";
 import {
   fetchSensorData,
-  fetchCurrentSensorData,
-  getPHLevels,
+  fetchCurrentSensorData_pnd6,
+  getPHLevels_pnd6,
 } from "src/api/sensor_data";
 import socket from "socket.io-client";
 import server_url from "src/constants/server-url";
@@ -235,7 +324,6 @@ import {
   displayDateOnly,
   displayDateOnly2,
 } from "src/composables/useDateFormatter";
-
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { fullpageLoaderState } from "src/composables/globalRefs";
@@ -253,8 +341,8 @@ ChartJS.register(
   Legend
 );
 
-const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
 // const socket_IO = socket("http://localhost:1338", {});
+const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
 // const socket_IO = socket(server_url, {});
 const phLevel = ref(0);
 const phChartData = ref([]);
@@ -265,22 +353,21 @@ const loading = ref(false);
 const currentPage = ref(1);
 const maxPage = ref(1);
 const totalRows = ref(0);
-const confirm = ref(false);
 const date_from = ref(
   displayDateOnly2(new Date().setDate(new Date().getDate()))
 );
 const date_to = ref(displayDateOnly2(new Date().setDate(new Date().getDate())));
 const sort = ref("desc");
 const sort_options = ref(["asc", "desc"]);
-const data_table = ref([]);
 const date__from = ref("");
 const date__to = ref("");
+const confirm = ref(false);
 const columns = [
   {
-    name: "ph",
+    name: "dox",
     align: "left",
-    label: "PH Level",
-    field: "ph",
+    label: "Dissolved Oxygen",
+    field: "dox",
   },
   {
     name: "time",
@@ -310,8 +397,8 @@ const data = ref({
   // labels: label1,
   datasets: [
     {
-      label: "pH",
-      backgroundColor: "#d84527",
+      label: "Dissolved Oxygen",
+      backgroundColor: "#ece513",
       data: data_1,
     },
   ],
@@ -323,7 +410,7 @@ const pHoptions = {
   scales: {
     y: {
       min: 0,
-      max: 12,
+      max: 15,
     },
     x: {
       ticks: {
@@ -338,8 +425,8 @@ const updateCharts = () => {
     labels: phChartDataLabel.value,
     datasets: [
       {
-        label: "pH",
-        backgroundColor: "#d84527",
+        label: "Dissolved Oxygen",
+        backgroundColor: "#ece513",
         data: phChartData.value,
       },
     ],
@@ -354,13 +441,27 @@ const initSocketIO = async () => {
 };
 
 const getSensorData = async () => {
-  await fetchCurrentSensorData().then((res) => {
-    phLevel.value = res?.data.data[0]?.attributes.ph;
-    // salinity.value = res?.data.data[0]?.attributes.sal;
-    // temperature.value = res?.data.data[0]?.attributes.rtd;
-    // dissolvedOxygen.value = res?.data.data[0]?.attributes.dox;
+  await fetchCurrentSensorData_pnd6().then((res) => {
+    phLevel.value = res?.data.data[0]?.attributes.dox;
     last_reading_date.value = res?.data.data[0]?.attributes.createdAt;
   });
+  // await fetchSensorData()
+  //   .then((res) => {
+  //     for (let i = 0; i <= res.data.data.length; i++) {
+  //       phChartData.value[i] = res?.data.data[i]?.attributes.dox;
+  //       phChartDataLabel.value[i] = moment(
+  //         res?.data.data[i]?.attributes.createdAt
+  //       ).format("h:mm:ss a");
+  //     }
+
+  //     phChartData.value.reverse();
+  //     phChartDataLabel.value.reverse();
+
+  //     updateCharts();
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 };
 
 const getPH_Levels = async (dateFrom, dateTo, order) => {
@@ -370,7 +471,7 @@ const getPH_Levels = async (dateFrom, dateTo, order) => {
     (currentPage.value - 1) * initialPagination.value.rowsPerPage;
 
   console.log("Page number", currentPage.value);
-  await getPHLevels(
+  await getPHLevels_pnd6(
     dateFrom,
     dateTo,
     initialPagination.value.rowsPerPage,
@@ -382,20 +483,23 @@ const getPH_Levels = async (dateFrom, dateTo, order) => {
         res?.data.meta.pagination.total / res?.data.meta.pagination.limit
       );
       totalRows.value = res?.data.meta.pagination.total;
-      data_table.value = res?.data.data;
+
       const rowsData = res?.data.data;
-      // console.log("Rows Meta", res?.data);
+      console.log("Rows Meta", res?.data.meta.pagination);
       rows.value.splice(0, rows.value.length, ...rowsData);
 
       // update charts
-      for (let i = 0; i <= res?.data.data.length; i++) {
-        phChartData.value[i] = res?.data.data[i]?.attributes.ph;
+
+      for (let i = 0; i <= res.data.data.length; i++) {
+        phChartData.value[i] = res?.data.data[i]?.attributes.dox;
         phChartDataLabel.value[i] = moment(
           res?.data.data[i]?.attributes.createdAt
         ).format("h:mm:ss a");
       }
+
       phChartData.value.reverse();
       phChartDataLabel.value.reverse();
+
       updateCharts();
     })
     .catch((err) => {
@@ -431,15 +535,10 @@ const dateOnChange = () => {
   );
 };
 
-const changeQueryParams = () => {
-  currentPage.value = 1;
-  dateOnChange();
-};
-
 // Download PDF
 const downloadReportInPDF = async () => {
   fullpageLoaderState.value = !fullpageLoaderState.value;
-  await getPHLevels(date__from.value, date__to.value, 50000, 0, sort.value)
+  await getPHLevels_pnd6(date__from.value, date__to.value, 50000, 0, sort.value)
     .then((res) => {
       console.log("Reports Data", res.data.data);
       fullpageLoaderState.value = !fullpageLoaderState.value;
@@ -447,7 +546,7 @@ const downloadReportInPDF = async () => {
       const body = [];
       res.data.data?.forEach((i) => {
         body.push([
-          i.attributes.ph,
+          `${i.attributes.dox} mg/L`,
           displayTimeOnly(i.attributes.createdAt),
           displayDateOnly(i.attributes.createdAt),
         ]);
@@ -455,11 +554,11 @@ const downloadReportInPDF = async () => {
 
       doc.text("Pond 1", 14, 10);
       autoTable(doc, {
-        head: [["PH Level", "Time", "Date"]],
+        head: [["Dissolved Oxygen", "Time", "Date"]],
         body: body,
       });
 
-      doc.save("pond-1(PH-level).pdf");
+      doc.save("pond-1(Dissolved Oxygen).pdf");
     })
     .catch((err) => {
       console.log(err);
@@ -471,6 +570,10 @@ const fetchPHdata = () => {
   confirm.value = true;
 };
 
+const changeQueryParams = () => {
+  currentPage.value = 1;
+  dateOnChange();
+};
 onMounted(async () => {
   getSensorData();
   dateOnChange();

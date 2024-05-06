@@ -186,7 +186,8 @@
         <q-card>
           <q-card-section class="row items-center">
             <span class=""
-              >You are about to download ph level data from date to date.</span
+              >You are about to download ph level data from {{ date_from }} to
+              {{ date_to }}.</span
             >
           </q-card-section>
 
@@ -210,9 +211,8 @@
 import { ref, onMounted } from "vue";
 import BackButton from "src/components/BackButton.vue";
 import {
-  fetchSensorData,
-  fetchCurrentSensorData,
-  getPHLevels,
+  fetchCurrentSensorData_pnd6,
+  getPHLevels_pnd6,
 } from "src/api/sensor_data";
 import socket from "socket.io-client";
 import server_url from "src/constants/server-url";
@@ -354,7 +354,7 @@ const initSocketIO = async () => {
 };
 
 const getSensorData = async () => {
-  await fetchCurrentSensorData().then((res) => {
+  await fetchCurrentSensorData_pnd6().then((res) => {
     phLevel.value = res?.data.data[0]?.attributes.ph;
     // salinity.value = res?.data.data[0]?.attributes.sal;
     // temperature.value = res?.data.data[0]?.attributes.rtd;
@@ -370,7 +370,7 @@ const getPH_Levels = async (dateFrom, dateTo, order) => {
     (currentPage.value - 1) * initialPagination.value.rowsPerPage;
 
   console.log("Page number", currentPage.value);
-  await getPHLevels(
+  await getPHLevels_pnd6(
     dateFrom,
     dateTo,
     initialPagination.value.rowsPerPage,
@@ -439,7 +439,7 @@ const changeQueryParams = () => {
 // Download PDF
 const downloadReportInPDF = async () => {
   fullpageLoaderState.value = !fullpageLoaderState.value;
-  await getPHLevels(date__from.value, date__to.value, 50000, 0, sort.value)
+  await getPHLevels_pnd6(date__from.value, date__to.value, 50000, 0, sort.value)
     .then((res) => {
       console.log("Reports Data", res.data.data);
       fullpageLoaderState.value = !fullpageLoaderState.value;

@@ -102,6 +102,7 @@
         </div>
       </div>
     </q-card>
+    <div></div>
   </q-page>
 </template>
 
@@ -127,6 +128,7 @@ import moment from "moment";
 import { useRouter } from "vue-router";
 import { LocalStorage } from "quasar";
 import keys from "../constants/localStorageKeys";
+import { LinearGauge } from "canvas-gauges";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -141,8 +143,8 @@ ChartJS.register(
   Legend
 );
 
-const socket_IO = socket("http://localhost:1338", {});
-// const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
+// const socket_IO = socket("http://localhost:1338", {});
+const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
 // const socket_IO = socket(server_url, {});
 const phLevel = ref(0);
 const salinity = ref(0);
@@ -158,6 +160,7 @@ const rtdChartDataLabel = ref([]);
 const doxChartData = ref([]);
 const doxChartDataLabel = ref([]);
 
+const ph_gauge = ref(7);
 let label1 = [];
 let data_1 = [];
 // for (let i = 0; i <= 149; i++) {
@@ -413,6 +416,22 @@ const select = (val) => {
       break;
   }
 };
+
+var gauge = new LinearGauge({
+  renderTo: document.createElement("canvas"),
+  width: 160,
+  height: 600,
+  borderRadius: 20,
+  borders: 0,
+  barStrokeWidth: 20,
+  minorTicks: 10,
+  majorTicks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+  value: 22.3,
+  units: "°C",
+  colorValueBoxShadow: false,
+});
+
+document.body.appendChild(gauge.options.renderTo);
 
 onMounted(async () => {
   await initSocketIO();

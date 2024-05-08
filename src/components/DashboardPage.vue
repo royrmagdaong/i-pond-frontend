@@ -129,6 +129,7 @@ import { useRouter } from "vue-router";
 import { LocalStorage } from "quasar";
 import keys from "../constants/localStorageKeys";
 import { LinearGauge } from "canvas-gauges";
+import baseURL from "src/constants/server-url";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -143,9 +144,8 @@ ChartJS.register(
   Legend
 );
 
-// const socket_IO = socket("http://localhost:1338", {});
-const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
-// const socket_IO = socket(server_url, {});
+const socket_IO = socket(baseURL, {});
+
 const phLevel = ref(0);
 const salinity = ref(0);
 const temperature = ref(0);

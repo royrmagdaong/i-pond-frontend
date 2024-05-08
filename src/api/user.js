@@ -4,6 +4,7 @@ import keys from "../constants/localStorageKeys";
 import useAxios from "../composables/useAxios";
 import userTypes from "src/constants/userTypes";
 import { LocalStorage } from "quasar";
+import baseURL from "src/constants/server-url";
 
 const login = async (data) => {
   let user = null;
@@ -15,12 +16,7 @@ const login = async (data) => {
     const { email, password } = data;
     const params = { identifier: email, password: password };
 
-    await useAxios(
-      params,
-      axiosTypes.POST,
-      // "http://localhost:1338/api/auth/local"
-      "https://i-pond-backend.ap.ngrok.io/api/auth/local"
-    ) // login api
+    await useAxios(params, axiosTypes.POST, baseURL) // login api
       .then(async (res) => {
         user = res.data.user;
         jwt = res.data.jwt;

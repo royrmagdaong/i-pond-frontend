@@ -215,7 +215,7 @@ import {
   getPHLevels_pnd6,
 } from "src/api/sensor_data";
 import socket from "socket.io-client";
-import server_url from "src/constants/server-url";
+import baseURL from "src/constants/server-url";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -253,9 +253,8 @@ ChartJS.register(
   Legend
 );
 
-const socket_IO = socket("https://i-pond-backend.ap.ngrok.io", {});
-// const socket_IO = socket("http://localhost:1338", {});
-// const socket_IO = socket(server_url, {});
+const socket_IO = socket(baseURL, {});
+
 const phLevel = ref(0);
 const phChartData = ref([]);
 const phChartDataLabel = ref([]);

@@ -31,13 +31,7 @@
               </div> -->
 
               <!-- gauge -->
-              <p
-                style="color: #7a7a7a; margin: 0"
-                class="text-caption text-center"
-              >
-                as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
-              </p>
+              <p class="text-center text-body1">pH Level</p>
               <div class="text-center q-mt-sm">
                 <canvas
                   data-type="radial-gauge"
@@ -81,6 +75,13 @@
                   data-border-middle-width="3"
                   data-border-inner-width="3"
                 ></canvas>
+                <p
+                  style="color: #7a7a7a; margin: 0"
+                  class="text-caption text-center"
+                >
+                  as of
+                  {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+                </p>
               </div>
             </q-card-section>
           </q-card>
@@ -108,13 +109,7 @@
               </div> -->
 
               <!-- gauge -->
-              <p
-                style="color: #7a7a7a; margin: 0"
-                class="text-caption text-center"
-              >
-                as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
-              </p>
+              <p class="text-center text-body1">Salinity</p>
               <div class="text-center q-mt-sm">
                 <canvas
                   data-type="radial-gauge"
@@ -155,6 +150,13 @@
                   data-border-inner-width="3"
                 ></canvas>
               </div>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
             </q-card-section>
           </q-card>
         </div>
@@ -181,13 +183,7 @@
               </div> -->
 
               <!-- gauge -->
-              <p
-                style="color: #7a7a7a; margin: 0"
-                class="text-caption text-center"
-              >
-                as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
-              </p>
+              <p class="text-center text-body1">Temperature</p>
               <div class="text-center q-mt-sm">
                 <canvas
                   data-type="radial-gauge"
@@ -230,6 +226,13 @@
                   data-border-inner-width="3"
                 ></canvas>
               </div>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
             </q-card-section>
           </q-card>
         </div>
@@ -256,13 +259,7 @@
               </div> -->
 
               <!-- gauge -->
-              <p
-                style="color: #7a7a7a; margin: 0"
-                class="text-caption text-center"
-              >
-                as of
-                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
-              </p>
+              <p class="text-center text-body1">Dissolved Oxygen</p>
               <div class="text-center q-mt-sm">
                 <canvas
                   data-type="radial-gauge"
@@ -306,6 +303,13 @@
                   data-border-inner-width="3"
                 ></canvas>
               </div>
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
             </q-card-section>
           </q-card>
         </div>

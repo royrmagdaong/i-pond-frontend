@@ -31,8 +31,8 @@
               </div> -->
 
               <!-- gauge -->
-              <p class="text-center text-body1">pH Level</p>
-              <div class="text-center q-mt-sm">
+              <p class="text-center text-body1 q-ma-sm">pH Level</p>
+              <div class="text-center">
                 <canvas
                   data-type="radial-gauge"
                   data-width="250"
@@ -109,8 +109,8 @@
               </div> -->
 
               <!-- gauge -->
-              <p class="text-center text-body1">Salinity</p>
-              <div class="text-center q-mt-sm">
+              <p class="text-center text-body1 q-ma-sm">Salinity</p>
+              <div class="text-center">
                 <canvas
                   data-type="radial-gauge"
                   data-width="250"
@@ -183,8 +183,8 @@
               </div> -->
 
               <!-- gauge -->
-              <p class="text-center text-body1">Temperature</p>
-              <div class="text-center q-mt-sm">
+              <p class="text-center text-body1 q-ma-sm">Temperature</p>
+              <div class="text-center">
                 <canvas
                   data-type="radial-gauge"
                   data-width="250"
@@ -259,8 +259,8 @@
               </div> -->
 
               <!-- gauge -->
-              <p class="text-center text-body1">Dissolved Oxygen</p>
-              <div class="text-center q-mt-sm">
+              <p class="text-center text-body1 q-ma-sm">Dissolved Oxygen</p>
+              <div class="text-center">
                 <canvas
                   data-type="radial-gauge"
                   data-width="250"

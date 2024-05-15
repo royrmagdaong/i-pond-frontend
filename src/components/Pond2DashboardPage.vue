@@ -66,7 +66,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import socket from "socket.io-client";
-import baseURL from "src/constants/server-url";
+import SERVER from "src/constants/server-url";
 import {
   fetchSensorData_pnd2,
   fetchCurrentSensorData_pnd2,
@@ -102,7 +102,7 @@ ChartJS.register(
   Legend
 );
 
-const socket_IO = socket(baseURL, {});
+const socket_IO = socket(SERVER.socketURL, {});
 
 const phLevel = ref(0);
 const temperature = ref(0);

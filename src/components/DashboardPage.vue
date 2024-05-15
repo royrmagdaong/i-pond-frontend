@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <q-card bordered flat class="q-pa-sm">
+    <q-card flat class="q-pa-sm">
       <!-- <p
         class="text-h3 q-pt-sm q-pl-sm text-weight-bold text-center"
         style="color: #484848"
@@ -12,10 +12,11 @@
           <q-card bordered flat style="height: 100%" class="">
             <div class="ph-hover-border" @click="select('ph')"></div>
             <q-card-section
-              class="q-pa-lg text-overline"
+              class="q-pa-md text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+              <!-- Line chart -->
+              <!-- <p class="text-h3 text-center q-mb-sm" style="color: #484848">
                 {{ phLevel }}
               </p>
               <p
@@ -27,6 +28,59 @@
               </p>
               <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data" :options="pHoptions" />
+              </div> -->
+
+              <!-- gauge -->
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
+              <div class="text-center q-mt-sm">
+                <canvas
+                  data-type="radial-gauge"
+                  data-width="250"
+                  data-height="250"
+                  data-units="pH"
+                  data-title="false"
+                  :data-value="phLevel"
+                  data-animate-on-init="true"
+                  data-animated-value="true"
+                  data-min-value="0"
+                  data-max-value="12"
+                  data-major-ticks="0,1,2,3,4,5,6,7,8,9,10,11,12"
+                  data-minor-ticks="2"
+                  data-stroke-ticks="false"
+                  data-highlights='[
+                    { "from": 0, "to": 2, "color": "#C50039" },
+                    { "from": 2, "to": 3, "color": "#EE4800" },
+                    { "from": 3, "to": 4, "color": "#FB8000" },
+                    { "from": 4, "to": 5, "color": "#FEB000" },
+                    { "from": 5, "to": 6, "color": "#FED503" },
+                    { "from": 6, "to": 7, "color": "#CAD703" },
+                    { "from": 7, "to": 8, "color": "#A7D400" },
+                    { "from": 8, "to": 9, "color": "#05A119" },
+                    { "from": 9, "to": 10, "color": "#015052" },
+                    { "from": 10, "to": 11, "color": "#3601A9" },
+                    { "from": 11, "to": 12, "color": "#5401A7" }
+                  ]'
+                  data-color-plate="transparent"
+                  data-color-major-ticks="#f5f5f5"
+                  data-color-minor-ticks="#ddd"
+                  data-color-title="#fff"
+                  data-color-units="#222"
+                  data-color-numbers="#888"
+                  data-color-needle-start="rgba(240, 128, 128)"
+                  data-color-needle-end="rgba(255, 160, 122)"
+                  data-value-box="true"
+                  data-animation-rule="bounce"
+                  data-animation-duration="1000"
+                  data-border-outer-width="3"
+                  data-border-middle-width="3"
+                  data-border-inner-width="3"
+                ></canvas>
               </div>
             </q-card-section>
           </q-card>
@@ -35,10 +89,11 @@
           <q-card bordered flat style="height: 100%">
             <div class="sal-hover-border" @click="select('sal')"></div>
             <q-card-section
-              class="q-pa-lg text-overline"
+              class="q-pa-md text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+              <!-- Line chart -->
+              <!-- <p class="text-h3 text-center q-mb-sm" style="color: #484848">
                 {{ salinity }} ppt
               </p>
               <p
@@ -50,6 +105,55 @@
               </p>
               <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data2" :options="salinityOptions" />
+              </div> -->
+
+              <!-- gauge -->
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
+              <div class="text-center q-mt-sm">
+                <canvas
+                  data-type="radial-gauge"
+                  data-width="250"
+                  data-height="250"
+                  data-units="ppt"
+                  data-title="false"
+                  :data-value="salinity"
+                  data-animate-on-init="true"
+                  data-animated-value="true"
+                  data-min-value="0"
+                  data-max-value="50"
+                  data-major-ticks="0,5,10,15,20,25,30,35,40,45,50"
+                  data-minor-ticks="2"
+                  data-stroke-ticks="false"
+                  data-highlights='[
+                    { "from": 0, "to": 5, "color": "#265C7E" },
+                    { "from": 5, "to": 15, "color": "#45767A" },
+                    { "from": 15, "to": 20, "color": "#5E7F52" },
+                    { "from": 20, "to": 30, "color": "#7F8C3C" },
+                    { "from": 30, "to": 40, "color": "#ADAF4E" },
+                    { "from": 40, "to": 45, "color": "#DAC73C" },
+                    { "from": 45, "to": 50, "color": "#F5D84C" }
+                  ]'
+                  data-color-plate="transparent"
+                  data-color-major-ticks="#f5f5f5"
+                  data-color-minor-ticks="#ddd"
+                  data-color-title="#fff"
+                  data-color-units="#222"
+                  data-color-numbers="#888"
+                  data-color-needle-start="rgba(240, 128, 128)"
+                  data-color-needle-end="rgba(255, 160, 122)"
+                  data-value-box="true"
+                  data-animation-rule="bounce"
+                  data-animation-duration="1000"
+                  data-border-outer-width="3"
+                  data-border-middle-width="3"
+                  data-border-inner-width="3"
+                ></canvas>
               </div>
             </q-card-section>
           </q-card>
@@ -58,10 +162,11 @@
           <q-card bordered flat style="height: 100%">
             <div class="temp-hover-border" @click="select('temp')"></div>
             <q-card-section
-              class="q-pa-lg text-overline"
+              class="q-pa-md text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+              <!-- Line chart -->
+              <!-- <p class="text-h3 text-center q-mb-sm" style="color: #484848">
                 {{ temperature }} °C
               </p>
               <p
@@ -73,6 +178,57 @@
               </p>
               <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data3" :options="tempOptions" />
+              </div> -->
+
+              <!-- gauge -->
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
+              <div class="text-center q-mt-sm">
+                <canvas
+                  data-type="radial-gauge"
+                  data-width="250"
+                  data-height="250"
+                  data-units="°C"
+                  data-title="true"
+                  :data-value="temperature"
+                  data-animate-on-init="true"
+                  data-animated-value="true"
+                  data-min-value="5"
+                  data-max-value="50"
+                  data-major-ticks="5,10,15,20,25,30,35,40,45,50"
+                  data-minor-ticks="2"
+                  data-stroke-ticks="false"
+                  data-highlights='[
+                    { "from": 5, "to": 10, "color": "#05F7F8" },
+                    { "from": 10, "to": 15, "color": "#3AB54A" },
+                    { "from": 15, "to": 20, "color": "#80FF00" },
+                    { "from": 20, "to": 25, "color": "#CDFF00" },
+                    { "from": 25, "to": 30, "color": "#FEFF00" },
+                    { "from": 30, "to": 35, "color": "#FFD728" },
+                    { "from": 35, "to": 40, "color": "#FF9E07" },
+                    { "from": 40, "to": 45, "color": "#F46523" },
+                    { "from": 45, "to": 50, "color": "#FE0000" }
+                  ]'
+                  data-color-plate="transparent"
+                  data-color-major-ticks="#f5f5f5"
+                  data-color-minor-ticks="#ddd"
+                  data-color-title="#fff"
+                  data-color-units="#222"
+                  data-color-numbers="#888"
+                  data-color-needle-start="rgba(240, 128, 128)"
+                  data-color-needle-end="rgba(255, 160, 122)"
+                  data-value-box="true"
+                  data-animation-rule="bounce"
+                  data-animation-duration="1000"
+                  data-border-outer-width="3"
+                  data-border-middle-width="3"
+                  data-border-inner-width="3"
+                ></canvas>
               </div>
             </q-card-section>
           </q-card>
@@ -81,10 +237,11 @@
           <q-card bordered flat style="height: 100%">
             <div class="dox-hover-border" @click="select('dox')"></div>
             <q-card-section
-              class="q-pa-lg text-overline"
+              class="q-pa-md text-overline"
               style="letter-spacing: 1px; font-size: 14px"
             >
-              <p class="text-h3 text-center q-mb-sm" style="color: #484848">
+              <!-- Line chart -->
+              <!-- <p class="text-h3 text-center q-mb-sm" style="color: #484848">
                 {{ dissolvedOxygen }} mg/L
               </p>
               <p
@@ -96,20 +253,71 @@
               </p>
               <div style="height: 220px; position: relative; z-index: 11">
                 <Bar :data="data4" :options="doxOptions" />
+              </div> -->
+
+              <!-- gauge -->
+              <p
+                style="color: #7a7a7a; margin: 0"
+                class="text-caption text-center"
+              >
+                as of
+                {{ moment(last_reading_date).format("MMMM DD, YYYY hh:mmA") }}
+              </p>
+              <div class="text-center q-mt-sm">
+                <canvas
+                  data-type="radial-gauge"
+                  data-width="250"
+                  data-height="250"
+                  data-units="mg/L"
+                  data-title="false"
+                  :data-value="dissolvedOxygen"
+                  data-animate-on-init="true"
+                  data-animated-value="true"
+                  data-min-value="0"
+                  data-max-value="15"
+                  data-major-ticks="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15"
+                  data-minor-ticks="2"
+                  data-stroke-ticks="false"
+                  data-highlights='[
+                    { "from": 0, "to": 1, "color": "#C01D2E" },
+                    { "from": 1, "to": 2, "color": "#ED1B24" },
+                    { "from": 2, "to": 3, "color": "#F15941" },
+                    { "from": 3, "to": 4, "color": "#F68567" },
+                    { "from": 4, "to": 5, "color": "#FABEA6" },
+                    { "from": 5, "to": 6, "color": "#6DCFF6" },
+                    { "from": 6, "to": 8, "color": "#01BAF3" },
+                    { "from": 8, "to": 10, "color": "#24A9E2" },
+                    { "from": 10, "to": 12, "color": "#0F75BD" },
+                    { "from": 12, "to": 15, "color": "#28388F" }
+                  ]'
+                  data-color-plate="transparent"
+                  data-color-major-ticks="#f5f5f5"
+                  data-color-minor-ticks="#ddd"
+                  data-color-title="#fff"
+                  data-color-units="#888"
+                  data-color-numbers="#888"
+                  data-color-needle-start="rgba(240, 128, 128)"
+                  data-color-needle-end="rgba(255, 160, 122)"
+                  data-value-box="true"
+                  data-animation-rule="bounce"
+                  data-animation-duration="1000"
+                  data-border-outer-width="3"
+                  data-border-middle-width="3"
+                  data-border-inner-width="3"
+                ></canvas>
               </div>
             </q-card-section>
           </q-card>
         </div>
       </div>
     </q-card>
-    <div></div>
   </q-page>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import socket from "socket.io-client";
-import server_url from "src/constants/server-url";
+// import server_url from "src/constants/server-url";
 import { fetchSensorData, fetchCurrentSensorData } from "src/api/sensor_data";
 import {
   Chart as ChartJS,
@@ -128,8 +336,8 @@ import moment from "moment";
 import { useRouter } from "vue-router";
 import { LocalStorage } from "quasar";
 import keys from "../constants/localStorageKeys";
-import { LinearGauge } from "canvas-gauges";
-import baseURL from "src/constants/server-url";
+// import { RadialGauge, LinearGauge } from "canvas-gauges";
+import SERVER from "src/constants/server-url";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -144,7 +352,7 @@ ChartJS.register(
   Legend
 );
 
-const socket_IO = socket(baseURL, {});
+const socket_IO = socket(SERVER.socketURL, {});
 
 const phLevel = ref(0);
 const salinity = ref(0);
@@ -417,25 +625,17 @@ const select = (val) => {
   }
 };
 
-var gauge = new LinearGauge({
-  renderTo: document.createElement("canvas"),
-  width: 160,
-  height: 600,
-  borderRadius: 20,
-  borders: 0,
-  barStrokeWidth: 20,
-  minorTicks: 10,
-  majorTicks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-  value: 22.3,
-  units: "°C",
-  colorValueBoxShadow: false,
-});
-
-document.body.appendChild(gauge.options.renderTo);
-
 onMounted(async () => {
   await initSocketIO();
   await get_10_sensor_data();
+
+  const plugin = document.createElement("script");
+  plugin.setAttribute(
+    "src",
+    "//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.7/all/gauge.min.js"
+  );
+  plugin.async = true;
+  document.head.appendChild(plugin);
 });
 </script>
 <style scoped>

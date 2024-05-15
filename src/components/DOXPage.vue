@@ -303,7 +303,7 @@ import {
   getPHLevels,
 } from "src/api/sensor_data";
 import socket from "socket.io-client";
-import baseURL from "src/constants/server-url";
+import SERVER from "src/constants/server-url";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -340,7 +340,7 @@ ChartJS.register(
   Legend
 );
 
-const socket_IO = socket(baseURL, {});
+const socket_IO = socket(SERVER.socketURL, {});
 
 const phLevel = ref(0);
 const phChartData = ref([]);

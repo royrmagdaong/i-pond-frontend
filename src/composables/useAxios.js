@@ -2,7 +2,7 @@ import axios from "axios";
 import keys from "../constants/localStorageKeys";
 import axiosTypes from "../constants/axiosTypes";
 import { LocalStorage } from "quasar";
-import baseURL from "src/constants/server-url";
+import SERVER from "src/constants/server-url";
 
 export default function useAxios(data, type, URL) {
   const user = LocalStorage.getItem(keys.USER);
@@ -28,7 +28,7 @@ export default function useAxios(data, type, URL) {
 
     case axiosTypes.PUT:
       return axios.put(
-        `${baseURL}${URL}`,
+        `${SERVER.baseURL}${URL}`,
         { data },
         {
           headers: {

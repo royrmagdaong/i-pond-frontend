@@ -4,7 +4,7 @@ import keys from "../constants/localStorageKeys";
 import useAxios from "../composables/useAxios";
 import userTypes from "src/constants/userTypes";
 import { LocalStorage } from "quasar";
-import baseURL from "src/constants/server-url";
+import SERVER from "src/constants/server-url";
 
 const login = async (data) => {
   let user = null;
@@ -16,7 +16,7 @@ const login = async (data) => {
     const { email, password } = data;
     const params = { identifier: email, password: password };
 
-    await useAxios(params, axiosTypes.POST, baseURL) // login api
+    await useAxios(params, axiosTypes.POST, SERVER.loginURL) // login api
       .then(async (res) => {
         user = res.data.user;
         jwt = res.data.jwt;
@@ -25,7 +25,7 @@ const login = async (data) => {
       })
       .catch((err) => {
         console.log("ERROR", err);
-        error = err.response.data.error;
+        error = { message: err.response.data.error };
       });
   } else {
     error = { message: "username or password is empty" };

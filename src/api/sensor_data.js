@@ -1,5 +1,5 @@
 import axios from "axios";
-import baseURL from "src/constants/server-url";
+import SERVER from "src/constants/server-url";
 import { LocalStorage } from "quasar";
 import { displayDateOnly2 } from "src/composables/useDateFormatter";
 
@@ -7,7 +7,9 @@ const token = LocalStorage.getItem("ipond-user")?.jwt;
 
 const fetchSensorData = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=${1}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=${1}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -18,7 +20,9 @@ const fetchSensorData = async () => {
 
 const fetchCurrentSensorData = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=${1}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=${1}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -29,7 +33,9 @@ const fetchCurrentSensorData = async () => {
 
 const fetchSensorData_pnd2 = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=${2}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=${2}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -40,7 +46,9 @@ const fetchSensorData_pnd2 = async () => {
 
 const fetchCurrentSensorData_pnd2 = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=${2}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=${2}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -51,7 +59,9 @@ const fetchCurrentSensorData_pnd2 = async () => {
 
 const fetchSensorData_pnd3 = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=${3}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=${3}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -62,7 +72,9 @@ const fetchSensorData_pnd3 = async () => {
 
 const fetchCurrentSensorData_pnd6 = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=${6}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=${6}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -73,7 +85,9 @@ const fetchCurrentSensorData_pnd6 = async () => {
 
 const fetchSensorData_pnd6 = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=${6}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=${6}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -84,7 +98,9 @@ const fetchSensorData_pnd6 = async () => {
 
 const fetchCurrentSensorData_pnd3 = async () => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=${3}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=${3}&filters[ph][$gt]=${-1}&sort[0]=createdAt%3Adesc`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -109,7 +125,9 @@ const getPHLevels = async (
   order
 ) => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=1&filters[ph][$gt]=${-1}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=1&filters[ph][$gt]=${-1}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -126,7 +144,9 @@ const getPHLevels_pnd2 = async (
   order
 ) => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=2&filters[ph][$gt]=${-1}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=2&filters[ph][$gt]=${-1}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -143,7 +163,9 @@ const getPHLevels_pnd3 = async (
   order
 ) => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=3&filters[ph][$gt]=${-1}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=3&filters[ph][$gt]=${-1}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -160,7 +182,9 @@ const getPHLevels_pnd6 = async (
   order
 ) => {
   return await axios.get(
-    `${baseURL}sensor-readings?filters[pnd][$eq]=6&filters[ph][$gt]=${-1}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
+    `${
+      SERVER.baseURL
+    }sensor-readings?filters[pnd][$eq]=6&filters[ph][$gt]=${-1}&filters[createdAt][$gte]=${dateFrom}&filters[createdAt][$lte]=${dateTo}&pagination[start]=${offset}&pagination[limit]=${limit}&sort[0]=createdAt:${order}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

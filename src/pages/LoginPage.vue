@@ -111,8 +111,8 @@ const signIn = async () => {
       router.push("/pond-1");
     }, 800);
   } else {
-    console.log("Error", error.message);
-    errorMessage.value = error.message;
+    console.log("Error", error?.message);
+    errorMessage.value = error?.message;
   }
 };
 </script>

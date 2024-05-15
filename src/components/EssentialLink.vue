@@ -24,6 +24,7 @@ import { LocalStorage } from "quasar";
 import { ref, onMounted } from "vue";
 import keys from "../constants/localStorageKeys";
 import { navDrawerLinks } from "src/composables/globalRefs";
+import { activeLink } from "src/composables/globalRefs";
 
 const props = defineProps(["link"]);
 const router = useRouter();
@@ -70,7 +71,12 @@ const routeTo = (path) => {
 };
 
 const getActiveLink = (val) => {
-  // console.log("active link", val);
+  // console.log("get active link", val);
+  if (val === activeLink.value) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const logout = () => {
@@ -82,14 +88,15 @@ const logout = () => {
 };
 
 const setActive = () => {
-  console.log(router.currentRoute.value.path);
-  console.log("Link", props.link);
+  activeLink.value = props.link.link;
 };
 
 const initActiveLink = () => {
   console.log("active link");
   if (router.currentRoute.value.path.includes(`/${props.link.link}`)) {
     active.value = true;
+    activeLink.value = props.link.link;
+    console.log("active ll", props.link.link);
   }
 };
 

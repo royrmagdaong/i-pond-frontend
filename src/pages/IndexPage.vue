@@ -1,7 +1,7 @@
 <template>
   <q-layout class="login-layout" view="lHh Lpr lFf">
-    <q-header elevated style="background-color: #eee !important">
-      <q-toolbar>
+    <q-header elevated>
+      <q-toolbar class="bg-primary">
         <q-btn
           flat
           dense
@@ -9,11 +9,17 @@
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
-          style="color: #242424"
+          style="color: #fff"
         />
 
-        <q-toolbar-title style="color: #242424"> iPond </q-toolbar-title>
-        <q-btn color="grey-6" round flat icon="more_horiz">
+        <q-toolbar-title style="color: #fff"> iPond </q-toolbar-title>
+        <q-btn
+          color="grey-6"
+          round
+          flat
+          icon="more_horiz"
+          style="color: #fff !important"
+        >
           <q-menu transition-show="jump-down" transition-hide="jump-up">
             <q-list style="min-width: 100px">
               <q-item clickable v-close-popup>

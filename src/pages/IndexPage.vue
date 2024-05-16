@@ -33,6 +33,52 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list class="q-mt-xl">
+        <div class="q-mb-xl">
+          <div class="flex items-center flex-center q-mb-lg">
+            <div class="">
+              <div class="text-center q-mb-sm">
+                <q-img
+                  :src="logo2"
+                  alt="logo"
+                  id="logo2"
+                  width="60px"
+                  height="65px"
+                  style="margin-right: 4px"
+                />
+                <q-img
+                  :src="logo3"
+                  alt="logo"
+                  id="logo3"
+                  width="60px"
+                  min-height="60px"
+                  class="q-mr-sm"
+                />
+                <q-img
+                  :src="logo4"
+                  alt="logo"
+                  id="logo4"
+                  width="60px"
+                  min-height="60px"
+                  class="q-mr-sm"
+                />
+                <q-img
+                  :src="logo"
+                  alt="logo"
+                  id="logo"
+                  height="60px"
+                  width="55px"
+                />
+              </div>
+              <p class="q-ma-none text-h5 text-center">i-Pond</p>
+              <p class="q-mt-sm q-mb-none text-caption text-center">
+                A LoRaWAN-based Pond Water Quality Control
+                <br />
+                <span>and Monitoring System</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr />
         <EssentialLink
           v-for="link in linksList"
           :key="link.title"
@@ -52,6 +98,11 @@ import { useRouter } from "vue-router";
 import { LocalStorage } from "quasar";
 import keys from "../constants/localStorageKeys";
 import EssentialLink from "components/EssentialLink.vue";
+
+import logo from "/icons/Picture1.jpg";
+import logo2 from "/icons/Picture2.png";
+import logo3 from "/icons/Picture3.png";
+import logo4 from "/icons/Picture4.jpg";
 
 const linksList = [
   {

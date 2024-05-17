@@ -29,87 +29,97 @@
           bordered
           flat
           style="width: 100%"
-          class="flex justify-end q-pa-sm"
+          class="flex justify-between q-pa-sm items-center"
         >
-          <div class="q-mr-sm sort-opt">
-            <q-select
-              dense
-              outlined
-              v-model="sort"
-              :options="sort_options"
-              @update:model-value="changeQueryParams"
+          <div>
+            <q-btn
+              @click="fetchPHdata"
+              color="primary"
+              icon="download"
+              label="data"
             />
           </div>
-          <div class="q-mr-sm date-from">
-            <q-input
-              dense
-              outlined
-              v-model="date_from"
-              label="Date from"
-              mask="date"
-              :rules="['date']"
-              hide-bottom-space
-            >
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date
-                      v-model="date_from"
-                      @update:model-value="changeQueryParams"
+          <div class="flex justify-end">
+            <div class="q-mr-sm sort-opt">
+              <q-select
+                dense
+                outlined
+                v-model="sort"
+                :options="sort_options"
+                @update:model-value="changeQueryParams"
+              />
+            </div>
+            <div class="q-mr-sm date-from">
+              <q-input
+                dense
+                outlined
+                v-model="date_from"
+                label="Date from"
+                mask="date"
+                :rules="['date']"
+                hide-bottom-space
+              >
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
                     >
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-          </div>
+                      <q-date
+                        v-model="date_from"
+                        @update:model-value="changeQueryParams"
+                      >
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
 
-          <div class="date-to">
-            <q-input
-              dense
-              outlined
-              v-model="date_to"
-              label="Date to"
-              mask="date"
-              :rules="['date']"
-              hide-bottom-space
-            >
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date
-                      v-model="date_to"
-                      @update:model-value="changeQueryParams"
+            <div class="date-to">
+              <q-input
+                dense
+                outlined
+                v-model="date_to"
+                label="Date to"
+                mask="date"
+                :rules="['date']"
+                hide-bottom-space
+              >
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
                     >
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
+                      <q-date
+                        v-model="date_to"
+                        @update:model-value="changeQueryParams"
+                      >
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
           </div>
         </q-card>
       </div>
@@ -171,6 +181,27 @@
           </template>
         </q-table>
       </div>
+
+      <q-dialog v-model="confirm" persistent>
+        <q-card>
+          <q-card-section class="row items-center">
+            <span class=""
+              >You are about to download ph level data from date to date.</span
+            >
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="Cancel" color="danger" v-close-popup />
+            <q-btn
+              @click="downloadReportInPDF"
+              flat
+              label="Continue"
+              color="primary"
+              v-close-popup
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
   </q-page>
 </template>
@@ -204,6 +235,9 @@ import {
   displayDateOnly,
   displayDateOnly2,
 } from "src/composables/useDateFormatter";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { fullpageLoaderState } from "src/composables/globalRefs";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -229,6 +263,9 @@ const loading = ref(false);
 const currentPage = ref(1);
 const maxPage = ref(1);
 const totalRows = ref(0);
+const confirm = ref(false);
+const date__from = ref("");
+const date__to = ref("");
 const date_from = ref(
   displayDateOnly2(new Date().setDate(new Date().getDate()))
 );
@@ -398,6 +435,9 @@ const dateOnChange = () => {
   var DATE_TO = new Date(dateTo);
   DATE_TO.setDate(DATE_TO.getDate() + 1);
 
+  date__from.value = displayDateOnly2(DATE_FROM);
+  date__to.value = displayDateOnly2(DATE_TO);
+
   getPH_Levels(
     displayDateOnly2(DATE_FROM),
     displayDateOnly2(DATE_TO),
@@ -409,6 +449,42 @@ const changeQueryParams = () => {
   currentPage.value = 1;
   dateOnChange();
 };
+
+// Download PDF
+const downloadReportInPDF = async () => {
+  fullpageLoaderState.value = !fullpageLoaderState.value;
+  await getPHLevels_pnd2(date__from.value, date__to.value, 50000, 0, sort.value)
+    .then((res) => {
+      console.log("Reports Data", res.data.data);
+      fullpageLoaderState.value = !fullpageLoaderState.value;
+      const doc = new jsPDF();
+      const body = [];
+      res.data.data?.forEach((i) => {
+        body.push([
+          i.attributes.rtd + "°C",
+          displayTimeOnly(i.attributes.createdAt),
+          displayDateOnly(i.attributes.createdAt),
+        ]);
+      });
+
+      doc.text("Pond 2", 14, 10);
+      autoTable(doc, {
+        head: [["Temperature", "Time", "Date"]],
+        body: body,
+      });
+
+      doc.save("pond-2(Temp).pdf");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// fetch ph data
+const fetchPHdata = () => {
+  confirm.value = true;
+};
+
 onMounted(async () => {
   getSensorData();
   dateOnChange();

@@ -669,7 +669,7 @@ onMounted(async () => {
 }
 
 .ph-card {
-  animation: lowWarning 1s infinite alternate;
+  /* animation: lowWarning 1s infinite alternate; */
 }
 /* .sal-card {
   background-color: #d84527;
@@ -677,7 +677,7 @@ onMounted(async () => {
 } */
 .dox-card {
   background-color: #d8452755;
-  animation: highWarning 1s infinite alternate;
+  /* animation: highWarning 1s infinite alternate; */
 }
 /* .temp-card {
   background-color: #d8452755;

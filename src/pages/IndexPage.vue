@@ -12,7 +12,7 @@
           style="color: #fff"
         />
 
-        <q-toolbar-title style="color: #fff"> iPond </q-toolbar-title>
+        <q-toolbar-title style="color: #fff"> Dashboard </q-toolbar-title>
         <q-btn
           color="grey-6"
           round

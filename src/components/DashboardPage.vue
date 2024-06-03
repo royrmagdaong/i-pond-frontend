@@ -9,7 +9,7 @@
       </p> -->
       <div class="row q-col-gutter-sm q-pa-sm">
         <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%" class="">
+          <q-card bordered flat style="height: 100%" class="ph-card">
             <div class="ph-hover-border" @click="select('ph')"></div>
             <q-card-section
               class="q-pa-md text-overline"
@@ -48,17 +48,17 @@
                   data-minor-ticks="2"
                   data-stroke-ticks="false"
                   data-highlights='[
-                    { "from": 0, "to": 2, "color": "#C50039" },
-                    { "from": 2, "to": 3, "color": "#EE4800" },
-                    { "from": 3, "to": 4, "color": "#FB8000" },
-                    { "from": 4, "to": 5, "color": "#FEB000" },
+                    { "from": 0, "to": 2, "color": "#FED503" },
+                    { "from": 2, "to": 3, "color": "#FED503" },
+                    { "from": 3, "to": 4, "color": "#FED503" },
+                    { "from": 4, "to": 5, "color": "#FED503" },
                     { "from": 5, "to": 6, "color": "#FED503" },
-                    { "from": 6, "to": 7, "color": "#CAD703" },
-                    { "from": 7, "to": 8, "color": "#A7D400" },
+                    { "from": 6, "to": 7, "color": "#05A119" },
+                    { "from": 7, "to": 8, "color": "#05A119" },
                     { "from": 8, "to": 9, "color": "#05A119" },
-                    { "from": 9, "to": 10, "color": "#015052" },
-                    { "from": 10, "to": 11, "color": "#3601A9" },
-                    { "from": 11, "to": 12, "color": "#5401A7" }
+                    { "from": 9, "to": 10, "color": "#C50039" },
+                    { "from": 10, "to": 11, "color": "#C50039" },
+                    { "from": 11, "to": 12, "color": "#C50039" }
                   ]'
                   data-color-plate="transparent"
                   data-color-major-ticks="#f5f5f5"
@@ -87,7 +87,7 @@
           </q-card>
         </div>
         <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%">
+          <q-card bordered flat style="height: 100%" class="sal-card">
             <div class="sal-hover-border" @click="select('sal')"></div>
             <q-card-section
               class="q-pa-md text-overline"
@@ -126,13 +126,13 @@
                   data-minor-ticks="2"
                   data-stroke-ticks="false"
                   data-highlights='[
-                    { "from": 0, "to": 5, "color": "#265C7E" },
-                    { "from": 5, "to": 15, "color": "#45767A" },
-                    { "from": 15, "to": 20, "color": "#5E7F52" },
-                    { "from": 20, "to": 30, "color": "#7F8C3C" },
-                    { "from": 30, "to": 40, "color": "#ADAF4E" },
-                    { "from": 40, "to": 45, "color": "#DAC73C" },
-                    { "from": 45, "to": 50, "color": "#F5D84C" }
+                    { "from": 0, "to": 5, "color": "#FED503" },
+                    { "from": 5, "to": 15, "color": "#FED503" },
+                    { "from": 15, "to": 20, "color": "#05A119" },
+                    { "from": 20, "to": 30, "color": "#05A119" },
+                    { "from": 30, "to": 40, "color": "#C50039" },
+                    { "from": 40, "to": 45, "color": "#C50039" },
+                    { "from": 45, "to": 50, "color": "#C50039" }
                   ]'
                   data-color-plate="transparent"
                   data-color-major-ticks="#f5f5f5"
@@ -161,7 +161,7 @@
           </q-card>
         </div>
         <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%">
+          <q-card bordered flat style="height: 100%" class="temp-card">
             <div class="temp-hover-border" @click="select('temp')"></div>
             <q-card-section
               class="q-pa-md text-overline"
@@ -200,15 +200,15 @@
                   data-minor-ticks="2"
                   data-stroke-ticks="false"
                   data-highlights='[
-                    { "from": 5, "to": 10, "color": "#05F7F8" },
-                    { "from": 10, "to": 15, "color": "#3AB54A" },
-                    { "from": 15, "to": 20, "color": "#80FF00" },
-                    { "from": 20, "to": 25, "color": "#CDFF00" },
-                    { "from": 25, "to": 30, "color": "#FEFF00" },
-                    { "from": 30, "to": 35, "color": "#FFD728" },
-                    { "from": 35, "to": 40, "color": "#FF9E07" },
-                    { "from": 40, "to": 45, "color": "#F46523" },
-                    { "from": 45, "to": 50, "color": "#FE0000" }
+                    { "from": 5, "to": 10, "color": "#FED503" },
+                    { "from": 10, "to": 15, "color": "#FED503" },
+                    { "from": 15, "to": 20, "color": "#05A119" },
+                    { "from": 20, "to": 25, "color": "#05A119" },
+                    { "from": 25, "to": 30, "color": "#05A119" },
+                    { "from": 30, "to": 35, "color": "#05A119" },
+                    { "from": 35, "to": 40, "color": "#05A119" },
+                    { "from": 40, "to": 45, "color": "#C50039" },
+                    { "from": 45, "to": 50, "color": "#C50039" }
                   ]'
                   data-color-plate="transparent"
                   data-color-major-ticks="#f5f5f5"
@@ -237,7 +237,7 @@
           </q-card>
         </div>
         <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%">
+          <q-card bordered flat style="height: 100%" class="dox-card">
             <div class="dox-hover-border" @click="select('dox')"></div>
             <q-card-section
               class="q-pa-md text-overline"
@@ -276,16 +276,16 @@
                   data-minor-ticks="2"
                   data-stroke-ticks="false"
                   data-highlights='[
-                    { "from": 0, "to": 1, "color": "#C01D2E" },
-                    { "from": 1, "to": 2, "color": "#ED1B24" },
-                    { "from": 2, "to": 3, "color": "#F15941" },
-                    { "from": 3, "to": 4, "color": "#F68567" },
-                    { "from": 4, "to": 5, "color": "#FABEA6" },
-                    { "from": 5, "to": 6, "color": "#6DCFF6" },
-                    { "from": 6, "to": 8, "color": "#01BAF3" },
-                    { "from": 8, "to": 10, "color": "#24A9E2" },
-                    { "from": 10, "to": 12, "color": "#0F75BD" },
-                    { "from": 12, "to": 15, "color": "#28388F" }
+                    { "from": 0, "to": 1, "color": "#FED503" },
+                    { "from": 1, "to": 2, "color": "#FED503" },
+                    { "from": 2, "to": 3, "color": "#FED503" },
+                    { "from": 3, "to": 4, "color": "#05A119" },
+                    { "from": 4, "to": 5, "color": "#05A119" },
+                    { "from": 5, "to": 6, "color": "#05A119" },
+                    { "from": 6, "to": 8, "color": "#05A119" },
+                    { "from": 8, "to": 10, "color": "#05A119" },
+                    { "from": 10, "to": 12, "color": "#05A119" },
+                    { "from": 12, "to": 15, "color": "#C50039" }
                   ]'
                   data-color-plate="transparent"
                   data-color-major-ticks="#f5f5f5"
@@ -652,19 +652,53 @@ onMounted(async () => {
   z-index: 10;
 }
 .ph-hover-border:hover {
-  border: 8px solid #d84527;
+  border: 8px solid #3b45b6;
   cursor: pointer;
 }
 .sal-hover-border:hover {
-  border: 8px solid #54ab66;
+  border: 8px solid #3b45b6;
   cursor: pointer;
 }
 .dox-hover-border:hover {
-  border: 8px solid #ece513;
+  border: 8px solid #3b45b6;
   cursor: pointer;
 }
 .temp-hover-border:hover {
-  border: 8px solid #484848;
+  border: 8px solid #3b45b6;
   cursor: pointer;
+}
+
+.ph-card {
+  /* animation: lowWarning 1s infinite alternate; */
+}
+/* .sal-card {
+  background-color: #d84527;
+  animation: changeColor 1s infinite alternate;
+} */
+.dox-card {
+  background-color: #d8452755;
+  /* animation: highWarning 1s infinite alternate; */
+}
+/* .temp-card {
+  background-color: #d8452755;
+  animation: changeColor 1s infinite alternate;
+} */
+
+@keyframes lowWarning {
+  from {
+    background-color: #fed503dd;
+  }
+  to {
+    background-color: #fed50333;
+  }
+}
+
+@keyframes highWarning {
+  from {
+    background-color: #d84527dd;
+  }
+  to {
+    background-color: #d8452733;
+  }
 }
 </style>

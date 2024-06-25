@@ -676,7 +676,7 @@ onMounted(async () => {
   animation: changeColor 1s infinite alternate;
 } */
 .dox-card {
-  background-color: #d8452755;
+  /* background-color: #d8452755; */
   /* animation: highWarning 1s infinite alternate; */
 }
 /* .temp-card {

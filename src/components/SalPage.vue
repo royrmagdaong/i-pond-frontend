@@ -540,17 +540,22 @@ const downloadReportInPDF = async () => {
       fullpageLoaderState.value = !fullpageLoaderState.value;
       const doc = new jsPDF();
       const body = [];
+      let count = 1;
       res.data.data?.forEach((i) => {
         body.push([
+          `${count}`,
           `${i.attributes.sal} ppt`,
           displayTimeOnly(i.attributes.createdAt),
           displayDateOnly(i.attributes.createdAt),
         ]);
+        count++;
       });
 
       doc.text("Pond 1", 14, 10);
+      doc.text("Total: ", 40, 10);
+      doc.text(`${body.length}`, 54, 10);
       autoTable(doc, {
-        head: [["Salinity", "Time", "Date"]],
+        head: [["No.", "Salinity", "Time", "Date"]],
         body: body,
       });
 

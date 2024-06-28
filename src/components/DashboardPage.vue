@@ -9,7 +9,12 @@
       </p> -->
       <div class="row q-col-gutter-sm q-pa-sm">
         <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%" class="ph-card">
+          <q-card
+            bordered
+            flat
+            style="height: 100%"
+            :class="{ 'low-warning': ph_low, 'high-warning': ph_high }"
+          >
             <div class="ph-hover-border" @click="select('ph')"></div>
             <q-card-section
               class="q-pa-md text-overline"
@@ -87,7 +92,12 @@
           </q-card>
         </div>
         <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%" class="sal-card">
+          <q-card
+            bordered
+            flat
+            style="height: 100%"
+            :class="{ 'low-warning': sal_low, 'high-warning': sal_high }"
+          >
             <div class="sal-hover-border" @click="select('sal')"></div>
             <q-card-section
               class="q-pa-md text-overline"
@@ -161,7 +171,12 @@
           </q-card>
         </div>
         <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%" class="temp-card">
+          <q-card
+            bordered
+            flat
+            style="height: 100%"
+            :class="{ 'low-warning': temp_low, 'high-warning': temp_high }"
+          >
             <div class="temp-hover-border" @click="select('temp')"></div>
             <q-card-section
               class="q-pa-md text-overline"
@@ -237,7 +252,12 @@
           </q-card>
         </div>
         <div class="col-12 col-sm-6">
-          <q-card bordered flat style="height: 100%" class="dox-card">
+          <q-card
+            bordered
+            flat
+            style="height: 100%"
+            :class="{ 'low-warning': dox_low, 'high-warning': dox_high }"
+          >
             <div class="dox-hover-border" @click="select('dox')"></div>
             <q-card-section
               class="q-pa-md text-overline"
@@ -371,6 +391,22 @@ const rtdChartData = ref([]);
 const rtdChartDataLabel = ref([]);
 const doxChartData = ref([]);
 const doxChartDataLabel = ref([]);
+const ph_low = ref(false);
+const ph_high = ref(false);
+const sal_low = ref(false);
+const sal_high = ref(false);
+const temp_low = ref(false);
+const temp_high = ref(false);
+const dox_low = ref(false);
+const dox_high = ref(false);
+const ph_low_limits = ref(5.99);
+const ph_high_limits = ref(9);
+const sal_low_limits = ref(14.99);
+const sal_high_limits = ref(30);
+const temp_low_limits = ref(14.99);
+const temp_high_limits = ref(40);
+const dox_low_limits = ref(2.99);
+const dox_high_limits = ref(12);
 
 const ph_gauge = ref(7);
 let label1 = [];
@@ -559,6 +595,30 @@ const get_10_sensor_data = async () => {
     temperature.value = res?.data.data[0]?.attributes.rtd;
     dissolvedOxygen.value = res?.data.data[0]?.attributes.dox;
     last_reading_date.value = res?.data.data[0]?.attributes.createdAt;
+
+    // warning for ph
+    if (phLevel.value <= ph_low_limits.value) ph_low.value = true;
+    else ph_low.value = false;
+    if (phLevel.value >= ph_high_limits.value) ph_high.value = true;
+    else ph_high.value = false;
+
+    // warning for sal
+    if (salinity.value <= sal_low_limits.value) sal_low.value = true;
+    else sal_low.value = false;
+    if (salinity.value >= sal_high_limits.value) sal_high.value = true;
+    else sal_high.value = false;
+
+    // warning for temp
+    if (temperature.value <= temp_low_limits.value) temp_low.value = true;
+    else temp_low.value = false;
+    if (temperature.value >= temp_high_limits.value) temp_high.value = true;
+    else temp_high.value = false;
+
+    // warning for dox
+    if (dissolvedOxygen.value <= dox_low_limits.value) dox_low.value = true;
+    else dox_low.value = false;
+    if (dissolvedOxygen.value >= dox_high_limits.value) dox_high.value = true;
+    else dox_high.value = false;
   });
   await fetchSensorData()
     .then((res) => {
@@ -668,8 +728,11 @@ onMounted(async () => {
   cursor: pointer;
 }
 
-.ph-card {
-  /* animation: lowWarning 1s infinite alternate; */
+.low-warning {
+  animation: lowWarning 1s infinite alternate;
+}
+.high-warning {
+  animation: highWarning 1s infinite alternate;
 }
 /* .sal-card {
   background-color: #d84527;

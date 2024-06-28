@@ -42,14 +42,12 @@
                   :data-value="phLevel"
                   data-animate-on-init="true"
                   data-animated-value="true"
-                  data-min-value="0"
+                  data-min-value="3"
                   data-max-value="12"
-                  data-major-ticks="0,1,2,3,4,5,6,7,8,9,10,11,12"
+                  data-major-ticks="3,4,5,6,7,8,9,10,11,12"
                   data-minor-ticks="2"
                   data-stroke-ticks="false"
                   data-highlights='[
-                    { "from": 0, "to": 2, "color": "#FED503" },
-                    { "from": 2, "to": 3, "color": "#FED503" },
                     { "from": 3, "to": 4, "color": "#FED503" },
                     { "from": 4, "to": 5, "color": "#FED503" },
                     { "from": 5, "to": 6, "color": "#FED503" },
@@ -120,19 +118,16 @@
                   :data-value="salinity"
                   data-animate-on-init="true"
                   data-animated-value="true"
-                  data-min-value="0"
-                  data-max-value="50"
-                  data-major-ticks="0,5,10,15,20,25,30,35,40,45,50"
+                  data-min-value="5"
+                  data-max-value="40"
+                  data-major-ticks="5,10,15,20,25,30,35,40"
                   data-minor-ticks="2"
                   data-stroke-ticks="false"
                   data-highlights='[
-                    { "from": 0, "to": 5, "color": "#FED503" },
                     { "from": 5, "to": 15, "color": "#FED503" },
                     { "from": 15, "to": 20, "color": "#05A119" },
                     { "from": 20, "to": 30, "color": "#05A119" },
-                    { "from": 30, "to": 40, "color": "#C50039" },
-                    { "from": 40, "to": 45, "color": "#C50039" },
-                    { "from": 45, "to": 50, "color": "#C50039" }
+                    { "from": 30, "to": 40, "color": "#C50039" }
                   ]'
                   data-color-plate="transparent"
                   data-color-major-ticks="#f5f5f5"

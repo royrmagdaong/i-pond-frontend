@@ -9,7 +9,7 @@
             style="letter-spacing: 1px; font-size: 14px"
           >
             <p class="text-h3 text-center q-mb-sm" style="color: #484848">
-              {{ phLevel }} °C
+              {{ (Math.round(phLevel * 100)/100).toFixed(2) }} °C
             </p>
             <p
               style="color: #7a7a7a; margin: 0"
@@ -224,7 +224,7 @@
           <!--  -->
           <template v-slot:body-cell-rtd="props">
             <q-td :props="props" class="">
-              {{ props.row?.attributes.rtd }} °C
+              {{ (Math.round(props.row?.attributes.rtd * 100)/100).toFixed(2) }} °C
             </q-td>
           </template>
           <template v-slot:body-cell-time="props">
